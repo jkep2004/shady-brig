@@ -1,0 +1,1 @@
+const keys = new Map (); // Create empty map to store currently pressed keys
