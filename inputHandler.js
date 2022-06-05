@@ -17,3 +17,19 @@ function keyReleased () {
     return false; // Prevent default
 
 }
+
+function mousePressed () {
+
+    keys.set(`mouse${mouseButton}`, true);
+
+    return false; // Prevent default
+
+}
+
+function mouseReleased () {
+
+    keys.delete(`mouse${mouseButton}`, true);
+
+    return false; // Prevent default
+
+}
