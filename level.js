@@ -3,7 +3,6 @@
 /* Stored in format ABABABAB
     A is the number of this Tile
     B is the type of Tile
-    / is endline, filling the rest of the row with air
 */
 
 const levelSizeX = 100;
@@ -11,8 +10,10 @@ const levelSizeY = 100;
 
 const LEVEL = ``;
 
+// DEBUG
+
 for (let y = 0; y < levelSizeY; x ++) {
 
-    LEVEL += `/`;
+    LEVEL += `${levelSizeX}1`;
 
 }
