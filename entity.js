@@ -1,7 +1,21 @@
 class Entity {
 
+	/* 	Draw any image
+		Draw given image at set position and size (From top-left corner)
+
+		@param {Number} posX <int> X position of image on canvas
+		@param {Number} posY <int> Y position of image on canvas
+		@param {Number} sizeX <int> X size of image on canvas
+		@param {Number} sizeY <int> Y size of image on canvas
+		@param
+
+		@author Jakob
+	
+	*/
+	
     static draw = function (posX, posY, sizeX, sizeY, image) {
 
+		imageMode(CORNER);
     	image(image, posX, posY, sizeX, sizeY);
 
     }
