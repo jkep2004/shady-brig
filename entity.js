@@ -13,10 +13,10 @@ class Entity {
 	
 	*/
 	
-    static draw = function (posX, posY, sizeX, sizeY, image) {
+    static draw = function (posX, posY, sizeX, sizeY, imageEle) {
 
 		imageMode(CORNER);
-    	image(image, posX, posY, sizeX, sizeY);
+    	image(imageEle, posX, posY, sizeX, sizeY);
 
     }
 

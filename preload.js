@@ -1,3 +1,5 @@
+var imageHandler, audioHandler;
+
 function preload () {
 
     imageHandler = new ImageHandler ("image");

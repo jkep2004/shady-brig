@@ -5,6 +5,7 @@ function setup () {
     // Setup p5.js canvas object
 
     createCanvas(windowWidth, windowHeight);
+    noSmooth()
 
     // Populate framerate variables
 

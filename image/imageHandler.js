@@ -42,7 +42,7 @@ class ImageHandler {
 
         for (let fileName of imageFiles) {
 
-            this.sprites[`${imagePath}`] = loadImage(`../${this.path}/${imagePath}0.png`);
+            this.sprites[`${fileName}`] = loadImage(`../${this.path}/${fileName}0.png`);
 
         }
 
@@ -52,13 +52,14 @@ class ImageHandler {
 
         for (let tileSet of imageFolders) {
 
-            console.log(tileSet);
-
             this.sprites[`${tileSet[2]}`] = [];
 
             for (let x = tileSet[0]; x <= tileSet[1]; x ++) {
 
-                this.sprites[`${tileSet[2]}`].push(loadImage(`../${this.path}/${tileSet[2]}/${tileSet[2]}${x}.png`));
+                let header = tileSet[2];
+                let fileName = (header.includes("/")) ? header.split("/")[1] : header;
+
+                this.sprites[`${header}`].push(loadImage(`../${this.path}/${header}/${fileName}${x}.png`));
 
             }
 
