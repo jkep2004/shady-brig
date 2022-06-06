@@ -10,7 +10,7 @@
 const levelSizeX = 100;
 const levelSizeY = 100;
 
-const LEVEL = ``;
+var LEVEL = ``;
 
 // DEBUG
 
