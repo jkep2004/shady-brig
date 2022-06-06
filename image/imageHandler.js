@@ -54,7 +54,7 @@ class ImageHandler {
 
             this.sprites[`${tileSet[2]}`] = [];
 
-            for (let x = tileSet[0]; x <= tileSet.upper[1]; x ++) {
+            for (let x = tileSet[0]; x <= tileSet[1]; x ++) {
 
                 this.sprites[`${tileSet[2]}`].push(loadImage(`../${this.path}/${tileSet[2]}${x}.png`));
 
