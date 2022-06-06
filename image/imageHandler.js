@@ -52,11 +52,13 @@ class ImageHandler {
 
         for (let tileSet of imageFolders) {
 
+            console.log(tileSet);
+
             this.sprites[`${tileSet[2]}`] = [];
 
             for (let x = tileSet[0]; x <= tileSet[1]; x ++) {
 
-                this.sprites[`${tileSet[2]}`].push(loadImage(`../${this.path}/${tileSet[2]}${x}.png`));
+                this.sprites[`${tileSet[2]}`].push(loadImage(`../${this.path}/${tileSet[2]}/${tileSet[2]}${x}.png`));
 
             }
 
