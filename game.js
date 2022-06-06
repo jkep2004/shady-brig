@@ -8,6 +8,6 @@ function setup () {
 
 function draw () {
 
-
+// what a useless function
 
 }
