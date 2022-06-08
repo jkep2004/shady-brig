@@ -8,7 +8,7 @@ function lineCount (n) {
 
   if (read === length) {
 
-    document.title = `Shady Brig - ${total}`;
+    document.title = `Shady Brig - ${lines}`;
 
   }
   
