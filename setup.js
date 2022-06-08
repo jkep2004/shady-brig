@@ -16,6 +16,6 @@ function setup () {
 
     // Start background music
 
-    audioHandler.playlist["backgroundMusic"].autoplay(true);
+    audioHandler.playlist["backgroundMusic"].loop();
 
 }
