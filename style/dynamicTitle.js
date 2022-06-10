@@ -2,6 +2,20 @@ let lines = 0;
 let read = 0;
 let length = 1;
 
+let files = [
+
+  "audioHandler.js",
+  "imageHandler.js",
+  "draw.js",
+  "entity.js",
+  "index.html",
+  "inputHandler.js",
+  "level.js",
+  "preload.js",
+  "setup.js"
+
+]
+
 function lineCount (n) {
   lines += n;
   read++;
