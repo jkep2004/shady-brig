@@ -28,37 +28,65 @@ const imageList = [ // Contains "filePath" for singular images
 ];
 
 
-class ImageHandler { // Handles all DOM to canvas images and favicon animation
+class ImageHandler {
 
     static iconAnimationRate = 4; // Animation changes of the favicon per second (max ≈ 5)
 
-    constructor (imagePath) { // Handler is created with a path to the image folder
+    /** Handles all DOM image elements as p5.Image objects and favicon animation
+     * 
+     *  @param {String} imagePath \<str> Path to image folder
+     * 
+     *  @author Jakob
+     * 
+     */
 
-        /* Dictionary of all sprites as p5.js images 
+    constructor (imagePath) {
+
+        /* Dictionary of all sprites as p5.Image objects 
         {"image": [image1, image2]} */
+
         this.sprites = {};
 
         this.path = imagePath; // Path to image folder
 
     }
 
-    loadImages (...imageFiles) { // Array of ["imageName1", "imageName2"] within image folder
+    /** Loads images as p5.Image objects and inserts them into sprites dictionary
+     * 
+     *  @param  {...String} imageFiles \<str> Array of image file names
+     * 
+     *  @author Jakob
+     * 
+     */
+
+    loadImages (...imageFiles) {
 
         for (let fileName of imageFiles) {
 
-            // Insert p5.js image into sprite dictionary
-            // 0 is added for forward compatability with animations so it starts at 0 and ends at 0
-            this.sprites[`${fileName}`] = loadImage(`../${this.path}/${fileName}0.png`); // Load p5.js image
+            // Insert p5.Image into sprite dictionary
+            // 0 is added for forward compatibility with animations so it starts at 0 and ends at 0
+            this.sprites[`${fileName}`] = loadImage(`../${this.path}/${fileName}0.png`); // Load p5.Image
 
         }
 
     }
 
-    loadTileSets (...imageFolders) { // 2d Array of [[lower, upper, "imageFolder"]...]
+    /** Loads tile sets as p5.Image objects and inserts them into sprites dictionary
+     * 
+     *  @param  {...Any} tileSets \<Array> 2d Array of [[lower, upper, "imageName"]...]
+     *  - lower - Start suffix of tile set (Eg Image0)
+     *  - upper - End suffix of tile set (Eg Image9)
+     *  - imageName - File name of tile set
+     * 
+     *  @author Jakob
+     * 
+     */
 
-        for (let tileSet of imageFolders) {
+    loadTileSets (...tileSets) {
 
-            this.sprites[`${tileSet[2]}`] = []; // Initialise empty array for images in sprites["imageFolder"]
+        for (let tileSet of tileSets) {
+
+            this.sprites[`${tileSet[2]}`] = []; // Initialise empty array for images in sprites["imageName"]
 
             for (let index = tileSet[0]; index <= tileSet[1]; index ++) { // For every image in the tile set
 
@@ -66,7 +94,7 @@ class ImageHandler { // Handles all DOM to canvas images and favicon animation
                 let fileName = (header.includes("/")) ? header.split("/")[1] : header; /* If file is within another folder remove the folder name
                 "folderName/fileName" => "fileName" */
 
-                this.sprites[`${header}`].push(loadImage(`../${this.path}/${header}/${fileName}${index}.png`)); // Load p5.js image
+                this.sprites[`${header}`].push(loadImage(`../${this.path}/${header}/${fileName}${index}.png`)); // Load p5.Image
 
             }
 
@@ -74,7 +102,18 @@ class ImageHandler { // Handles all DOM to canvas images and favicon animation
 
     }
 
-    loadFavicon (...tileSet) { // Load tile set for animated favicon
+    /** Loads a tile set to use as an animated favicon
+     * 
+     * @param  {...any} tileSet \<Array> Array of [lower, upper, "imageName"]
+     *  - lower - Start suffix of tile set (Eg Image0)
+     *  - upper - End suffix of tile set (Eg Image9)
+     *  - imageName - File name of tile set
+     * 
+     *  @author Jakob
+     * 
+     */
+
+    loadFavicon (...tileSet) {
 
         this.icon = {}; // Icon related variables
         this.icon.dom = document.getElementById("favicon"); // HTML icon element
@@ -101,7 +140,15 @@ class ImageHandler { // Handles all DOM to canvas images and favicon animation
 
     }
 
-    animateFavicon () { // Update favicon in browser
+    /** Loops through animation states of the favicon
+     * 
+     * @see ImageHandler.iconAnimationRate
+     * 
+     * @author Jakob
+     * 
+     */
+
+    animateFavicon () { 
 
         if (millis() - this.icon.update > 1000 / ImageHandler.iconAnimationRate) { // If it is time for favicon to update
 

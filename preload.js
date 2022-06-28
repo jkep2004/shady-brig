@@ -1,5 +1,11 @@
 var imageHandler, audioHandler;
 
+/** Caches all DOM elements before the page is loaded 
+ * 
+ *  @author Jakob
+ * 
+ */
+
 function preload () {
 
     imageHandler = new ImageHandler ("image");

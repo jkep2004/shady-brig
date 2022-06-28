@@ -8,23 +8,40 @@ const audioList = [ // Contains all audio tracks
 
 ];
 
-class AudioHandler { // Handles all DOM audio
+class AudioHandler {
 
-    constructor (audioPath) { // Handler is created with a path to the audio folder
+    /** Handles all audio DOM elements as p5.Audio
+     * 
+     * @param {String} audioPath \<str> File path to audio folder
+     * 
+     * @author Jakob
+     * 
+     */
 
-        /* Dictionary of all tracks as p5.js audio tracks 
+    constructor (audioPath) {
+
+        /* Dictionary of all tracks as p5.Audio tracks 
         {"track": track} */
+
         this.playlist = {};
         
         this.path = audioPath; // Path to audio folder
 
     }
 
-    loadTracks (...audioFiles) { // Array of ["trackName1", "trackName2"] within audio folder
+    /** Adds all audio files as p5.Audio objects to playlist
+     * 
+     * @param  {...String} audioFiles \<str> Array of ["trackName1", "trackName2"] within audio folder
+     * 
+     * @author Jakob
+     * 
+     */
+
+    loadTracks (...audioFiles) {
 
         for (let fileName of audioFiles) {
 
-            // Insert p5.js audio track into playlist dictionary
+            // Insert p5.audio track into playlist dictionary
             this.playlist[`${fileName}`] = createAudio(`../${this.path}/${fileName}.mp3`);
 
         }
@@ -33,7 +50,15 @@ class AudioHandler { // Handles all DOM audio
 
 }
 
-function playBackgroundMusic () { // Automatically play background music when possible
+/** Automatically begin play of background music when possible
+ * 
+ * @param {AudioHandler} audioHandler \<AudioHandler> Object handling all p5.Audio objects
+ * 
+ * @author Jakob
+ * 
+ */
+
+function playBackgroundMusic (audioHandler) {
 
     if (audioHandler.playlist["backgroundMusic"].time() == 0) {
 

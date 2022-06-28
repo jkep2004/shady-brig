@@ -14,8 +14,10 @@ var LEVEL = ``;
 
 // DEBUG
 
-for (let y = 0; y < levelSizeY; y ++) {
+LEVEL = ``;
 
-    LEVEL += `${levelSizeX}1`;
+for (let y = 0; y < levelSizeY; y++) {
+
+	LEVEL += `${levelSizeX}1`;
 
 }

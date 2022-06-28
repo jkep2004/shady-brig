@@ -16,6 +16,14 @@ let files = [
 
 ]
 
+/**Counts lines within file and changes document title to the total
+ * 
+ * @param {Number} n \<int> ??
+ * 
+ * @author Luc
+ * 
+ */
+
 function lineCount (n) {
   lines += n;
   read++;

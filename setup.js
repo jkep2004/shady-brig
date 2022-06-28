@@ -1,5 +1,13 @@
 var simRate, targetFPS, simSpeed; // Initialise global framerate variables
 
+/** Initialise all variables and create p5.Canvas
+ * 
+ *  @see preload()
+ * 
+ *  @author Jakob
+ * 
+ */
+
 function setup () {
 
     // Setup p5.js canvas object

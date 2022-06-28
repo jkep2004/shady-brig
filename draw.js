@@ -1,16 +1,24 @@
+/** Main loop within game
+ * 
+ *  @see setup()
+ * 
+ *  @author Jakob
+ * 
+ */
+
 function draw () {
 
-    //Fps related functions
+    // Framerate
 
     simRate = deltaTime / simSpeed; // Update simRate from current deltaTime
 
-    // Browser related functions
+    // Browser
     
     imageHandler.animateFavicon();
     
     playBackgroundMusic();
 
-    // Canvas related functions
+    // Canvas
 
     background(100);
 
