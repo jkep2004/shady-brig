@@ -1,8 +1,9 @@
 // BLOCK string for game level
 
-/* Stored in format ABABABAB
+/* Stored in format ABABABAB/
     A is the number of this Tile
     B is the type of Tile
+    / is a new line
     
     Each row should sum to levelSizeX and there should be levelSizeY rows
 */
@@ -18,6 +19,6 @@ LEVEL = ``;
 
 for (let y = 0; y < levelSizeY; y++) {
 
-	LEVEL += `${levelSizeX}1`;
+	LEVEL += `919293949596979091929314/`;
 
 }

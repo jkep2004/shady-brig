@@ -64,8 +64,7 @@ class ImageHandler {
         for (let fileName of imageFiles) {
 
             // Insert p5.Image into sprite dictionary
-            // 0 is added for forward compatibility with animations so it starts at 0 and ends at 0
-            this.sprites[`${fileName}`] = loadImage(`../${this.path}/${fileName}0.png`); // Load p5.Image
+            this.sprites[`${fileName}`] = [loadImage(`../${this.path}/${fileName}.png`)]; // Load p5.Image
 
         }
 

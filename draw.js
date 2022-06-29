@@ -16,10 +16,14 @@ function draw () {
     
     imageHandler.animateFavicon();
     
-    playBackgroundMusic();
+    playBackgroundMusic(audioHandler);
 
     // Canvas
 
     background(100);
+    world.draw();
+    player.draw();
+
+    Entity.drawCollisionBox(player.pos.x, player.pos.y, player.size.x, player.size.y);
 
 }

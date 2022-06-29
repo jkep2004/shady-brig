@@ -15,10 +15,19 @@ class Entity {
 	
     static draw = function (posX, posY, sizeX, sizeY, imageEle) {
 
-		imageMode(CORNER);
 		image(imageEle, posX, posY, sizeX, sizeY);
 
     }
+
+	static drawCollisionBox = function (posX, posY, sizeX, sizeY) {
+
+		stroke(255, 0, 0);
+		strokeWeight(2);
+		noFill();
+
+		rect(posX, posY, sizeX, sizeY);
+
+	}
 
 	/** Entity object for drawing and moving images
 	 * 	- Entity contains position, size and speed of object to be drawn to canvas
