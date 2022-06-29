@@ -55,69 +55,99 @@ class Tile {
             case 'e': // Enemy
 
                 this.image = imageHandler.sprites[floor][0];
-                this.parentLevel.enemies.push(new Enemy (this.pos.x, this.pos.y, Enemy.speed));
+                this.parentLevel.enemies.push(new Enemy (this.pos.x, this.pos.y));
 
                 break;
 
             case 'c': // Coin
 
+                this.image = imageHandler.sprites[floor][0];
+
                 break;
 
             case 's': // Spikes (No offset)
+
+                this.image = imageHandler.sprites[floor][0];
 
                 break;
 
             case 'S': // Spikes (Offset by 1/2 a period)
 
+                this.image = imageHandler.sprites[floor][0];
+
                 break;
 
             case 'b': // Blue tube
+
+                this.image = imageHandler.sprites[floor][0];
 
                 break;
 
             case 'B': // Blue flask
 
-                break;
+                this.image = imageHandler.sprites[floor][0];
+
+                break;;
 
             case 'g': // Green tube
 
-                break;
+                this.image = imageHandler.sprites[floor][0];
+
+                break;;
 
             case 'G': // Green flask
 
-                break;
+                this.image = imageHandler.sprites[floor][0];
+
+                break;;
 
             case 'o': // Orange tube
 
-                break;
+                this.image = imageHandler.sprites[floor][0];
+
+                break;;
 
             case 'O': // Orange flask
 
-                break;
+                this.image = imageHandler.sprites[floor][0];
+
+                break;;
 
             case 'y': // Yellow tube
 
-                break;
+                this.image = imageHandler.sprites[floor][0];
+
+                break;;
 
             case 'Y': // Yellow flask
 
-                break;
+                this.image = imageHandler.sprites[floor][0];
+
+                break;;
 
             case 's': // Red switch
 
-                break;
+                this.image = imageHandler.sprites[floor][0];
+
+                break;;
 
             case 'S': // Blue switch
 
-                break;
+                this.image = imageHandler.sprites[floor][0];
+
+                break;;
 
             case 'a': // Red actuator
 
-                break;
+                this.image = imageHandler.sprites[floor][0];
+
+                break;;
 
             case 'A': // Blue actuator
 
-                break;
+                this.image = imageHandler.sprites[floor][0];
+
+                break;;
 
         }
 

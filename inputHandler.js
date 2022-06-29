@@ -35,3 +35,9 @@ function mouseReleased () {
     return false; // Prevent default
 
 }
+
+class InputHandler {
+
+    
+
+}
