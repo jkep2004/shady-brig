@@ -56,6 +56,69 @@ class Tile {
 
                 this.image = imageHandler.sprites[floor][0];
                 this.parentLevel.enemies.push(new Enemy (this.pos.x, this.pos.y, Enemy.speed));
+
+                break;
+
+            case 'c': // Coin
+
+                break;
+
+            case 's': // Spikes (No offset)
+
+                break;
+
+            case 'S': // Spikes (Offset by 1/2 a period)
+
+                break;
+
+            case 'b': // Blue tube
+
+                break;
+
+            case 'B': // Blue flask
+
+                break;
+
+            case 'g': // Green tube
+
+                break;
+
+            case 'G': // Green flask
+
+                break;
+
+            case 'o': // Orange tube
+
+                break;
+
+            case 'O': // Orange flask
+
+                break;
+
+            case 'y': // Yellow tube
+
+                break;
+
+            case 'Y': // Yellow flask
+
+                break;
+
+            case 's': // Red switch
+
+                break;
+
+            case 'S': // Blue switch
+
+                break;
+
+            case 'a': // Red actuator
+
+                break;
+
+            case 'A': // Blue actuator
+
+                break;
+
         }
 
     }
