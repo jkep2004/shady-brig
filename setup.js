@@ -29,19 +29,19 @@ function setup () {
 
     // Initialise statics
 
-    Tile.size = width / 24;
+    Tile.size = Math.floor(width / 24);
 
     Player.size = {
 
-        x: Tile.size / 2,
+        x: Math.floor(Tile.size / 2),
         y: Tile.size
 
     }
 
     Player.speed = {
 
-        x: width / 256,
-        y: width / 256
+        x: Math.floor(width / 128),
+        y: Math.floor(width / 128)
 
     }
 
@@ -55,15 +55,15 @@ function setup () {
 
     Enemy.size = {
 
-        x: width / 96,
-        y: width / 32
+        x: Math.floor(width / 96),
+        y: Math.floor(width / 32)
 
     }
 
     Enemy.speed = {
 
-        x: width / 320,
-        y: width / 320
+        x: Math.floor(width / 320),
+        y: Math.floor(width / 320)
 
     }
 
@@ -72,13 +72,21 @@ function setup () {
         'idle': imageHandler.sprites['demon/idle'], 
         'run': imageHandler.sprites['demon/run']
 
-    };
+    }
 
+    Edge.size = {
+
+        x: Tile.size,
+        y: Tile.size,
+        off: Tile.size / 4
+
+    }
 
     // Create world
 
-    world = new Surface (LEVEL);
+    world = new Surface (LEVELS[0]);
 
-    player = new Player (width / 2, height / 2);
+    inputHandler.surface = world;
+    inputHandler.player = world.player;
 
 }

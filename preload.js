@@ -1,4 +1,4 @@
-var imageHandler, audioHandler;
+var imageHandler, audioHandler, inputHandler;
 
 /** Caches all DOM elements before the page is loaded 
  * 
@@ -18,5 +18,7 @@ function preload () {
     audioHandler = new AudioHandler ("audio");
 
     audioHandler.loadTracks(...audioList);
+
+    inputHandler = new InputHandler ();
 
 }

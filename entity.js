@@ -19,16 +19,6 @@ class Entity {
 
     }
 
-	static drawCollisionBox = function (posX, posY, sizeX, sizeY) {
-
-		stroke(255, 0, 0);
-		strokeWeight(2);
-		noFill();
-
-		rect(posX, posY, sizeX, sizeY);
-
-	}
-
 	/** Entity object for drawing and moving images
 	 * 	- Entity contains position, size and speed of object to be drawn to canvas
 	 * 
@@ -68,6 +58,7 @@ class Entity {
 		}
 
 		this.image = image;
+		this.show = true;
 
     }
 
@@ -79,7 +70,7 @@ class Entity {
 
 	draw () {
 
-		image(this.image, this.pos.x, this.pos.y, this.size.x, this.size.y);
+		if (this.show) image(this.image, this.pos.x, this.pos.y, this.size.x, this.size.y);
 
 	}
 
@@ -95,8 +86,12 @@ class Entity {
 
 	update (xDir, yDir) {
 
-		this.pos.x += this.speed.x * xDir * simSpeed;
-		this.pos.y += this.speed.y * yDir * simSpeed;
+		this.pos.x += this.speed.x * xDir * simRate;
+		this.pos.y += this.speed.y * yDir * simRate;
+
+		if (xDir == 0) return;
+
+		this.direction = Math.sign(xDir);
 
 	}
 

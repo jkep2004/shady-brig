@@ -14,16 +14,30 @@ function draw () {
 
     // Browser
     
-    imageHandler.animateFavicon();
+    imageHandler.animateFavicon(); // Animate the favicon
     
-    playBackgroundMusic(audioHandler);
+    playBackgroundMusic(audioHandler); // Attempt to play background music until DOM allows it
 
     // Canvas
 
-    background(100);
-    world.draw();
-    player.draw();
+    inputHandler.handlePlayer(keys);
+    inputHandler.handleMouse(keys, world, world.player);
+    inputHandler.handleKeyboard(keys, world);
 
-    Entity.drawCollisionBox(player.pos.x, player.pos.y, player.size.x, player.size.y);
+    push(); // Save current translation
+
+    translate(width / 2 - world.player.pos.x, height / 2 - world.player.pos.y);
+
+    background(100); // Make background a light-grey
+
+    world.draw(); // Draw tiles and objects
+    world.drawEdges('up', 'left'); // Draw top edges
+
+    world.player.draw(); // Draw player
+    CollisionHandler.drawCollisionBox(world.player.pos.x, world.player.pos.y, world.player.size.x, world.player.size.y); // DEBUG - draw player collision
+    
+    world.drawEdges('down', 'right'); // Draw bottom edges
+
+    pop();
 
 }

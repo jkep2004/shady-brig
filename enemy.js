@@ -19,19 +19,55 @@ class Enemy extends Entity {
 
     draw () {
 
+        if (!this.show) return;
+
         if (this.moving) {
 
-            image(Enemy.images['run'][Math.floor(this.animationState)], this.pos.x, this.pos.y, this.size.x, this.size.y);
+            push();
 
-            this.animationState = (this.animationState + (this.animationRate * 2)) % 4;
+            scale(this.direction, 1);
+
+            if (this.direction == 1) {
+
+                image(Enemy.images['run'][Math.floor(this.animationState)], this.pos.x, this.pos.y, this.size.x, this.size.y);
+
+            } else {
+
+                image(Enemy.images['run'][Math.floor(this.animationState)], - this.size.x - this.pos.x, this.pos.y, this.size.x, this.size.y);
+
+            }
+
+            this.animationState = (this.animationState + (this.animationRate * 2 * simRate)) % 4;
+
+            pop();
 
         } else {
 
-            image(Enemy.images['idle'][Math.floor(this.animationState)], this.pos.x, this.pos.y, this.size.x, this.size.y);
+            push();
 
-            this.animationState = (this.animationState + this.animationRate) % 4;
+            scale(this.direction, 1);
+
+            if (this.direction == 1) {
+
+                image(Enemy.images['idle'][Math.floor(this.animationState)], this.pos.x, this.pos.y, this.size.x, this.size.y);
+
+            } else {
+
+                image(Enemy.images['idle'][Math.floor(this.animationState)], - this.size.x - this.pos.x, this.pos.y, this.size.x, this.size.y);
+
+            }
+
+            this.animationState = (this.animationState + (this.animationRate * simRate)) % 4;
+
+            pop();
 
         }
+
+    }
+
+    update () {
+
+        // pathfind to player
 
     }
 

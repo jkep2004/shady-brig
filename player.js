@@ -5,21 +5,26 @@ class Player extends Entity {
     static images;
     static animationRate = 0.05;
 
-    constructor (posX, posY) {
+    constructor (posX, posY, score = 0, level = 0) {
 
         super(posX, posY, Player.size.x, Player.size.y, Player.speed.x, Player.speed.y, Player.images['idle'][0]);
 
+        this.score = score;
+        this.level = level;
+
         this.weapon = new Weapon ();
+
         this.moving = false;
+        this.direction = 1;
 
         this.animationState = 0;
         this.animationRate = Player.animationRate;
 
-        console.log(this)
-
     }
 
     draw () {
+
+        if (!this.show) return;
 
         if (this.hit) {
             
@@ -30,15 +35,43 @@ class Player extends Entity {
 
         if (this.moving) {
 
-            image(Player.images['run'][Math.floor(this.animationState)], this.pos.x, this.pos.y, this.size.x, this.size.y);
+            push();
 
-            this.animationState = (this.animationState + (this.animationRate * 2)) % 4;
+            scale(this.direction, 1);
+
+            if (this.direction == 1) {
+
+                image(Player.images['run'][Math.floor(this.animationState)], this.pos.x, this.pos.y, this.size.x, this.size.y);
+
+            } else {
+
+                image(Player.images['run'][Math.floor(this.animationState)], - this.size.x - this.pos.x, this.pos.y, this.size.x, this.size.y);
+
+            }
+
+            this.animationState = (this.animationState + (this.animationRate * 2 * simRate)) % 4;
+
+            pop();
 
         } else {
 
-            image(Player.images['idle'][Math.floor(this.animationState)], this.pos.x, this.pos.y, this.size.x, this.size.y);
+            push();
 
-            this.animationState = (this.animationState + this.animationRate) % 4;
+            scale(this.direction, 1);
+
+            if (this.direction == 1) {
+
+                image(Player.images['idle'][Math.floor(this.animationState)], this.pos.x, this.pos.y, this.size.x, this.size.y);
+
+            } else {
+
+                image(Player.images['idle'][Math.floor(this.animationState)], - this.size.x - this.pos.x, this.pos.y, this.size.x, this.size.y);
+
+            }
+
+            this.animationState = (this.animationState + (this.animationRate * simRate)) % 4;
+
+            pop();
 
         }
 
