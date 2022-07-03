@@ -27,8 +27,6 @@ class Surface {
         }
 
         tileCode = tileCode.split('');
-        
-        console.log(...tileCode)
 
         let oldTile = tileCode.shift();
         let newTile = tileCode.shift();
@@ -208,26 +206,96 @@ class Surface {
         return tiles;
 
     }
+
+    static saveLevel = function (surface) {
+
+        for (let row of surface.tiles) {
+
+            for (let tile of row) {
+
+                if (!tile) continue;
+
+                if (tile.imageNum == 'c' && tile.object == null) tile.imageNum = 0;
+                if (tile.imageNum == 'P') tile.imageNum = 0;
+                if (tile.imageNum == 'e') tile.imageNum = 0;
+alpha
+            }
+
+        }
+
+        for (let enemy of surface.enemies) {
+
+            let indexX = Math.floor(enemy.pos.x / Tile.size);
+            let indexY = Math.floor(enemy.pos.y / Tile.size);
+
+            surface.tiles[indexY][indexX].imageNum = 'e';
+
+        }
+
+        surface.tiles[surface.player.last.y][surface.player.last.x].imageNum = 'P';
+
+        let code = '';
+
+        code = Surface.surfaceToLevel(surface.tiles);
+
+        return new Level (code, surface.size.x, surface.size.y);
+
+    }
+
+    static loadLevel = function (player, levelChange) {
+
+        let newLevel = player.level + levelChange;
+
+        let surface = LEVELS[newLevel];
+        surface.player.score = player.score;
+        surface.player.level = newLevel;
+
+        return surface;
+
+    }
     
     constructor (level, player = null) {
 
         let levelCode = level.code;
-        let levelSizeX = level.size.x;
-        let levelSizeY = level.size.y;
+        this.size = {
+
+            x: level.size.x,
+            y: level.size.y
+
+        }
         
         this.player = player;
+
+        this.enemies = [];
+        this.coins = [];
+        this.ladders = [];
+        this.potions = [];
+
+        this.switches = {
+
+            'red': [],
+            'blue': []
+
+        }
         
-        this.tiles = new Array (levelSizeY);
+        this.actuators = {
 
-        for (let index = 0; index < levelSizeY; index ++) {
+            'red': [],
+            'blue': []
 
-            this.tiles[index] = new Array (levelSizeX);
+        }
+        
+        this.tiles = new Array (this.size.y);
+
+        for (let index = 0; index < this.size.y; index ++) {
+
+            this.tiles[index] = new Array (this.size.x);
 
         }
 
         levelCode = levelCode.split('/');
 
-        for (let indexY = 0; indexY < levelSizeY; indexY ++) {
+        for (let indexY = 0; indexY < this.size.y; indexY ++) {
 
             let totalLength = 0;
 
@@ -256,8 +324,6 @@ class Surface {
         }
 
         this.tiles = Surface.populateEdges(this.tiles);
-
-        this.enemies = [];
 
     }
 

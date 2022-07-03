@@ -1,5 +1,7 @@
 var simRate, targetFPS, simSpeed; // Initialise global framerate variables
 var world, player; // Initialise global level variables
+var updateObjects, fadeAlpha; // Initialise room fade variables
+var actuated;
 
 /** Initialise all variables and create p5.Canvas
  * 
@@ -22,6 +24,16 @@ function setup () {
     targetFPS = 60; // Game target framerate
     simSpeed = 1000 / targetFPS; // Game target time per frame (ms)
     frameRate(targetFPS); // Set target framerate
+    
+    updateObjects = true;
+    fadeAlpha = 0;
+
+    actuated = {
+
+        red: false,
+        blue: true
+
+    }
 
     // Start background music
 
@@ -71,6 +83,26 @@ function setup () {
 
         'idle': imageHandler.sprites['demon/idle'], 
         'run': imageHandler.sprites['demon/run']
+
+    }
+
+    Coin.size = Tile.size / 2;
+
+    Coin.audio = audioHandler.playlist['collectCoin'];
+
+    Coin.images = imageHandler.sprites['coin'];
+
+    Switch.images = {
+
+        'red': imageHandler.sprites['switch/red'],
+        'blue': imageHandler.sprites['switch/blue']
+
+    }
+
+    Actuator.images = {
+
+        'red': imageHandler.sprites['actuator/red'],
+        'blue': imageHandler.sprites['actuator/blue']
 
     }
 

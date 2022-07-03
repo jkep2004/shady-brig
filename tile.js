@@ -44,6 +44,7 @@ class Tile {
 
                 this.image = imageHandler.sprites['ladder'][0];
                 this.object = new Ladder (this.pos.x, this.pos.y, Tile.size, Tile.size, 1);
+                this.level.ladders.push(this.object);
 
                 break;
 
@@ -51,6 +52,7 @@ class Tile {
 
                 this.image = imageHandler.sprites['ladder'][0];
                 this.object = new Ladder (this.pos.x, this.pos.y, Tile.size, Tile.size, -1);
+                this.level.ladders.push(this.object);
 
                 break;
 
@@ -64,6 +66,8 @@ class Tile {
             case 'c': // Coin
 
                 this.image = imageHandler.sprites['floor'][0];
+                this.object = new Coin (this.pos.x + Tile.size / 2 - Coin.size / 2, this.pos.y + Tile.size / 2 - Coin.size / 2, this, this.level.coins.length);
+                this.level.coins.push(this.object);
 
                 break;
 
@@ -130,24 +134,32 @@ class Tile {
             case 's': // Red switch
 
                 this.image = imageHandler.sprites['floor'][0];
+                this.object = new Switch (this.pos.x, this.pos.y, 'red', actuated.red, this, this.level)
+                this.level.switches['red'].push(this.object);
 
                 break;
 
             case 'S': // Blue switch
 
                 this.image = imageHandler.sprites['floor'][0];
+                this.object = new Switch (this.pos.x, this.pos.y, 'blue', actuated.blue, this, this.level)
+                this.level.switches['blue'].push(this.object);
 
                 break;
 
             case 'a': // Red actuator
 
                 this.image = imageHandler.sprites['floor'][0];
+                this.object = new Actuator (this.pos.x, this.pos.y, 'red', actuated.red, this, this.level);
+                this.level.actuators['red'].push(this.object);
 
                 break;
 
             case 'A': // Blue actuator
 
                 this.image = imageHandler.sprites['floor'][0];
+                this.object = new Actuator (this.pos.x, this.pos.y, 'blue', actuated.blue, this, this.level);
+                this.level.actuators['blue'].push(this.object);
 
                 break;
 
@@ -162,8 +174,7 @@ class Tile {
                     
                 } else {
                     
-                    this.level.player = new Player (this.pos.x + Player.size.x / 2, this.pos.y);
-                    console.log(this.level, this.level.player)
+                    this.level.player = new Player (this.pos.x + Player.size.x / 2, this.pos.y, 0, 0, this.level);
 
                 }
 

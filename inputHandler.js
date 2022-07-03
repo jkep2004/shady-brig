@@ -41,6 +41,17 @@ class InputHandler {
 
     static TileEditCooldown = 500;
 
+    static control = {
+
+        moveUp: 'w',
+        moveDown: 's',
+        moveLeft: 'a',
+        moveRight: 'd',
+        interact: ' ',
+        getMap: 'p',
+
+    }
+
     constructor () {
 
         this.surface;
@@ -53,9 +64,9 @@ class InputHandler {
         this.player.moving = false;
         let moved;
 
-        if (keys.has('w')) {
+        if (keys.has(InputHandler.control.moveUp)) {
 
-            if (keys.has('a') || keys.has('d')) {
+            if (keys.has(InputHandler.control.moveLeft) || keys.has(InputHandler.control.moveRight)) {
 
                 moved = this.player.update(0, -0.7);
 
@@ -69,9 +80,9 @@ class InputHandler {
 
         }
 
-        if (keys.has('s')) {
+        if (keys.has(InputHandler.control.moveDown)) {
 
-            if (keys.has('a') || keys.has('d')) {
+            if (keys.has(InputHandler.control.moveLeft) || keys.has(InputHandler.control.moveRight)) {
 
                 moved = this.player.update(0, 0.7);
 
@@ -85,9 +96,9 @@ class InputHandler {
 
         }
 
-        if (keys.has('a')) {
+        if (keys.has(InputHandler.control.moveLeft)) {
 
-            if (keys.has('w') || keys.has('s')) {
+            if (keys.has(InputHandler.control.moveUp) || keys.has(InputHandler.control.moveDown)) {
 
                 moved = this.player.update(-0.7, 0);
 
@@ -101,9 +112,9 @@ class InputHandler {
 
         }
 
-        if (keys.has('d')) {
+        if (keys.has(InputHandler.control.moveRight)) {
 
-            if (keys.has('w') || keys.has('s')) {
+            if (keys.has(InputHandler.control.moveUp) || keys.has(InputHandler.control.moveDown)) {
 
                 moved = this.player.update(0.7, 0);
 
@@ -211,7 +222,7 @@ class InputHandler {
     
     handleKeyboard (keys, surface) {
 
-        if (keys.has(' ')) {
+        if (keys.has(InputHandler.control.getMap)) {
 
             alert(Surface.surfaceToLevel(surface.tiles));
             document.write(Surface.surfaceToLevel(surface.tiles));

@@ -5,12 +5,15 @@ class Player extends Entity {
     static images;
     static animationRate = 0.05;
 
-    constructor (posX, posY, score = 0, level = 0) {
+    constructor (posX, posY, score = 0, level = 0, parentLevel) {
 
         super(posX, posY, Player.size.x, Player.size.y, Player.speed.x, Player.speed.y, Player.images['idle'][0]);
 
         this.score = score;
         this.level = level;
+
+        this.surface = parentLevel;
+        this.last = {}
 
         this.weapon = new Weapon ();
 
@@ -23,6 +26,20 @@ class Player extends Entity {
     }
 
     draw () {
+
+        let indexY = (Math.floor(this.pos.y / Tile.size) >= 0) ? Math.floor(this.pos.y / Tile.size) : 1;
+        let indexX = (Math.floor(this.pos.x / Tile.size) >= 0) ? Math.floor(this.pos.x / Tile.size) : 1;
+
+        if (this.surface.tiles[indexY][indexX] && this.surface.tiles[indexY][indexX].object == null) {
+
+            this.last = {
+
+                x: indexX,
+                y: indexY
+
+            }
+
+        }
 
         if (!this.show) return;
 

@@ -20,9 +20,12 @@ function draw () {
 
     // Canvas
 
-    inputHandler.handlePlayer(keys);
-    inputHandler.handleMouse(keys, world, world.player);
-    inputHandler.handleKeyboard(keys, world);
+    if (updateObjects) inputHandler.handlePlayer(keys);
+    if (updateObjects) inputHandler.handleMouse(keys, world, world.player);
+    if (updateObjects) inputHandler.handleKeyboard(keys, world);
+
+    if (updateObjects) CollisionHandler.playerObjectCollisions(world, world.player, world.enemies, world.coins, world.ladders, world.potions);
+    if (updateObjects) CollisionHandler.playerWallCollisions(world, world.player);
 
     push(); // Save current translation
 
@@ -34,10 +37,19 @@ function draw () {
     world.drawEdges('up', 'left'); // Draw top edges
 
     world.player.draw(); // Draw player
-    CollisionHandler.drawCollisionBox(world.player.pos.x, world.player.pos.y, world.player.size.x, world.player.size.y); // DEBUG - draw player collision
+    if (updateObjects) CollisionHandler.drawCollisionBox(world.player.pos.x, world.player.pos.y, world.player.size.x, world.player.size.y); // DEBUG - draw player collision
     
     world.drawEdges('down', 'right'); // Draw bottom edges
 
     pop();
+
+    if (!updateObjects) {
+
+        fill(0, fadeAlpha);
+        stroke(0);
+        strokeWeight(2);
+        rect(0, 0, width, height);
+
+    }
 
 }
