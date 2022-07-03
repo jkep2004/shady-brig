@@ -39,7 +39,7 @@ function mouseReleased (event) {
 
 class InputHandler {
 
-    static TileEditCooldown = 500;
+    static tileEditCooldown = 500;
 
     static control = {
 
@@ -52,10 +52,83 @@ class InputHandler {
 
     }
 
-    constructor () {
+    constructor (surface = null, player = null) {
 
-        this.surface;
-        this.player;
+        this.surface = surface;
+        this.player = player;
+
+        this.draw = {};
+
+        this.draw['hearts'] = function (self) {
+
+
+
+        }
+
+        this.draw['coins'] = function (self) {
+
+        }
+
+        this.draw['box'] = function (self, posX, posY, sizeX, sizeY, count) {
+
+            if (self.hotbar.selected == count) {
+
+                stroke(172, 140, 124);
+
+            } else {
+
+                stroke(0)
+
+            }
+
+            strokeWeight(4);
+            fill(100);
+
+            rect(posX, posY, sizeX, sizeY);
+
+            fill(255);
+            stroke(0);
+            strokeWeight(2);
+        
+            textAlign(LEFT, BOTTOM);
+            textStyle(BOLD);
+            textSize(width / 128);
+            text(`${count}.`, posX + sizeX / 16, posY + sizeY);
+
+        },
+
+        this.draw['hotbar'] = function (self) {
+
+            let pos = {
+
+                x: Tile.size,
+                y: height / 64 + height / 16,
+                off: width / 64
+
+            }
+
+            for (let index = self.hotbar.objects.length; index > 0; index --) {
+
+                self.draw['box'](self, width - ((pos.x + pos.off) * index), pos.y, pos.x, pos.x, self.hotbar.objects.length - index + 1);
+
+            }
+
+        }
+
+        this.hotbar = {
+
+            selected: 1,
+            objects: [
+                'coin',
+                'actuator',
+                'switch',
+                'enemy',
+                'ladder',
+                'spike'
+            ],
+            options: ['red', 'blue']
+
+        }
 
     }
 
@@ -146,7 +219,7 @@ class InputHandler {
             
         }
 
-        let changed = (recentlyChanged.has(`${index.x},${index.y}`)) ? (recentlyChanged.get(`${index.x},${index.y}`) > millis() - InputHandler.TileEditCooldown): false;
+        let changed = (recentlyChanged.has(`${index.x},${index.y}`)) ? (recentlyChanged.get(`${index.x},${index.y}`) > millis() - InputHandler.tileEditCooldown): false;
 
         if (mouseIsPressed && !changed) {
 
@@ -171,38 +244,46 @@ class InputHandler {
                         edited = true;
         
                     }
-                    
-                    if (mouseButton == 'left' && !edited) {
-                        
-                        surface.tiles[index.y][index.x].imageNum ++;
-        
-                        if (surface.tiles[index.y][index.x].imageNum == 8) {
-        
-                            surface.tiles[index.y][index.x] = null;
-                            
-                        } else {
-        
-                            surface.tiles[index.y][index.x].image = imageHandler.sprites['floor'][surface.tiles[index.y][index.x].imageNum];
-        
-                        }
-        
-                        edited = true;
-        
-                    } else if (mouseButton == 'right' && !edited) {
 
-                        surface.tiles[index.y][index.x].imageNum --;
-        
-                        if (surface.tiles[index.y][index.x].imageNum == -1) {
-        
-                            surface.tiles[index.y][index.x] = null;
+                    if (!isNaN(parseInt(surface.tiles[index.y][index.x].imageNum))) {
+
+                        if (mouseButton == 'left' && !edited) {
                             
-                        } else {
-        
-                            surface.tiles[index.y][index.x].image = imageHandler.sprites['floor'][surface.tiles[index.y][index.x].imageNum];
-        
+                            surface.tiles[index.y][index.x].imageNum ++;
+            
+                            if (surface.tiles[index.y][index.x].imageNum == 8) {
+            
+                                surface.tiles[index.y][index.x] = null;
+                                
+                            } else {
+            
+                                surface.tiles[index.y][index.x].image = imageHandler.sprites['floor'][surface.tiles[index.y][index.x].imageNum];
+            
+                            }
+            
+                            edited = true;
+            
+                        } else if (mouseButton == 'right' && !edited) {
+    
+                            surface.tiles[index.y][index.x].imageNum --;
+            
+                            if (surface.tiles[index.y][index.x].imageNum == -1) {
+            
+                                surface.tiles[index.y][index.x] = null;
+                                
+                            } else {
+            
+                                surface.tiles[index.y][index.x].image = imageHandler.sprites['floor'][surface.tiles[index.y][index.x].imageNum];
+            
+                            }
+    
+                            edited = true;
+    
                         }
 
-                        edited = true;
+                    } else {
+
+
 
                     }
 
@@ -226,6 +307,12 @@ class InputHandler {
 
             alert(Surface.surfaceToLevel(surface.tiles));
             document.write(Surface.surfaceToLevel(surface.tiles));
+
+        }
+
+        for (let x = 1; x <= this.hotbar.objects.length; x ++) {
+
+            if (keys.has(`${x}`)) this.hotbar.selected = x;
 
         }
 

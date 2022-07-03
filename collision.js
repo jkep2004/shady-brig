@@ -10,6 +10,30 @@ class CollisionHandler {
 
 	}
 
+	static drawArrayCollisionBox = function (array) {
+
+		for (let element of array) {
+
+			CollisionHandler.drawCollisionBox(element.pos.x, element.pos.y, element.size.x, element.size.y);
+
+		}
+
+	}
+
+	static draw2dArrayCollisionBox = function (array) {
+
+		for (let row of array) {
+
+			for (let element of row) {
+	
+				CollisionHandler.drawCollisionBox(element.pos.x, element.pos.y, element.size.x, element.size.y);
+	
+			}
+
+		}
+
+	}
+
 	static colliding = function (entity1, entity2) {
 
 		return entity1.pos.x < entity2.pos.x + entity2.size.x &&

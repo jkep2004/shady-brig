@@ -37,11 +37,56 @@ function draw () {
     world.drawEdges('up', 'left'); // Draw top edges
 
     world.player.draw(); // Draw player
-    if (updateObjects) CollisionHandler.drawCollisionBox(world.player.pos.x, world.player.pos.y, world.player.size.x, world.player.size.y); // DEBUG - draw player collision
     
     world.drawEdges('down', 'right'); // Draw bottom edges
 
+    // DEBUG
+    
+    if (updateObjects) CollisionHandler.drawCollisionBox(world.player.pos.x, world.player.pos.y, world.player.size.x, world.player.size.y); // DEBUG - draw player collision
+    if (updateObjects) CollisionHandler.drawArrayCollisionBox(world.ladders);
+    if (updateObjects) CollisionHandler.drawArrayCollisionBox(world.coins);
+    if (updateObjects) CollisionHandler.drawArrayCollisionBox(world.enemies);
+    if (updateObjects) CollisionHandler.drawArrayCollisionBox(world.potions);
+    if (updateObjects) CollisionHandler.drawArrayCollisionBox(world.switches['red']);
+    if (updateObjects) CollisionHandler.drawArrayCollisionBox(world.actuators['red']);
+    if (updateObjects) CollisionHandler.drawArrayCollisionBox(world.switches['blue']);
+    if (updateObjects) CollisionHandler.drawArrayCollisionBox(world.actuators['blue']);
+
+    // if (updateObjects) {
+
+    //     for (let row of world.tiles) {
+
+    //         for (let tile of row) {
+
+    //             if (!tile) continue;
+
+    //             for (let [side, edge] of Object.entries(tile.edges)) {
+
+    //                 CollisionHandler.drawCollisionBox(edge.pos.x, edge.pos.y, edge.size.x, edge.size.y);
+
+    //                 if (edge.cap[0]) {
+
+    //                     for(let cap of edge.cap) {
+
+    //                         CollisionHandler.drawCollisionBox(cap.pos.x, cap.pos.y, cap.size.x, cap.size.y);
+
+    //                     }
+
+    //                 }
+
+    //             }
+
+    //         }
+
+    //     }
+
+    // }
+
     pop();
+
+    inputHandler.draw['hotbar'](inputHandler);
+    inputHandler.draw['hearts'](inputHandler);
+    inputHandler.draw['coins'](inputHandler);
 
     if (!updateObjects) {
 
