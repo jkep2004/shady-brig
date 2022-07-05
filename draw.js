@@ -20,9 +20,9 @@ function draw () {
 
     // Canvas
 
-    if (updateObjects) inputHandler.handlePlayer(keys);
+    if (updateObjects) inputHandler.handlePlayer(keys, world.player);
     if (updateObjects) inputHandler.handleMouse(keys, world, world.player);
-    if (updateObjects) inputHandler.handleKeyboard(keys, world);
+    if (updateObjects) inputHandler.handleKeyboard(keys, world, world.player);
 
     if (updateObjects) CollisionHandler.playerObjectCollisions(world, world.player, world.enemies, world.coins, world.ladders, world.potions);
     if (updateObjects) CollisionHandler.playerWallCollisions(world, world.player);
@@ -84,9 +84,10 @@ function draw () {
 
     pop();
 
+    inputHandler.draw['lowHealth'](inputHandler, world.player);
     inputHandler.draw['hotbar'](inputHandler);
-    inputHandler.draw['hearts'](inputHandler);
-    inputHandler.draw['coins'](inputHandler);
+    inputHandler.draw['hearts'](inputHandler, world.player);
+    inputHandler.draw['coins'](inputHandler, world.player);
 
     if (!updateObjects) {
 

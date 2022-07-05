@@ -4,13 +4,14 @@ class Enemy extends Entity {
     static speed;
     static images;
 
-    static animationRate = 0.02;
+    static animationRate = 0.05;
 
     constructor (posX, posY) {
 
         super(posX, posY, Enemy.size.x, Enemy.size.y, Enemy.speed.x, Enemy.speed.y, Enemy.images['idle'][0]);
 
         this.moving = false;
+        this.direction = 1;
 
         this.animationState = 0;
         this.animationRate = Enemy.animationRate;

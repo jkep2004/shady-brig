@@ -16,7 +16,12 @@ class Player extends Entity {
         this.last = {}
 
         this.weapon = new Weapon ();
-        this.hearts = 10;
+
+        this.maxHealth = 10;
+        this.health = this.maxHealth;
+        this.isHit = false;
+        this.hitDelay = 500;
+        this.hitTimeout;
 
         this.moving = false;
         this.direction = 1;
@@ -44,9 +49,15 @@ class Player extends Entity {
 
         if (!this.show) return;
 
-        if (this.hit) {
-            
-            image(Player.images['hit'], this.pos.x, this.pos.y, this.size.x, this.size.y);
+        if (this.isHit) {
+
+            push();
+
+            scale(this.direction, 1);
+
+            image(Player.images['hit'], this.direction * this.pos.x, this.pos.y, this.direction * this.size.x, this.size.y);
+
+            pop();
             return;
 
         }
@@ -57,15 +68,7 @@ class Player extends Entity {
 
             scale(this.direction, 1);
 
-            if (this.direction == 1) {
-
-                image(Player.images['run'][Math.floor(this.animationState)], this.pos.x, this.pos.y, this.size.x, this.size.y);
-
-            } else {
-
-                image(Player.images['run'][Math.floor(this.animationState)], - this.size.x - this.pos.x, this.pos.y, this.size.x, this.size.y);
-
-            }
+            image(Player.images['run'][Math.floor(this.animationState)], this.direction * this.size.x, this.pos.y, this.direction * this.size.x, this.size.y);
 
             this.animationState = (this.animationState + (this.animationRate * 2 * simRate)) % 4;
 
@@ -77,21 +80,69 @@ class Player extends Entity {
 
             scale(this.direction, 1);
 
-            if (this.direction == 1) {
-
-                image(Player.images['idle'][Math.floor(this.animationState)], this.pos.x, this.pos.y, this.size.x, this.size.y);
-
-            } else {
-
-                image(Player.images['idle'][Math.floor(this.animationState)], - this.size.x - this.pos.x, this.pos.y, this.size.x, this.size.y);
-
-            }
+            image(Player.images['idle'][Math.floor(this.animationState)], this.direction * this.pos.x, this.pos.y, this.direction * this.size.x, this.size.y);
 
             this.animationState = (this.animationState + (this.animationRate * simRate)) % 4;
 
             pop();
 
         }
+
+    }
+
+    hit () {
+
+        if (!this.isHit) {
+
+            this.changeHealth(-1);
+
+            if (this.hitTimeout) {
+
+                clearTimeout(this.hitTimeout);
+    
+            } 
+    
+            this.hitTimeout = window.setTimeout(() => {
+    
+                this.isHit = false;
+    
+            }, this.hitDelay)
+
+        }
+
+        this.isHit = true;
+
+    }
+
+    changeHealth (change) {
+
+        if (change < 0) {
+
+            this.health += change;
+
+            if (this.health <= 0) this.die();
+
+        } else if (change > 0) {
+
+            this.health += change;
+
+            if (this.health > this.maxHealth) this.health = this.maxHealth;
+
+        }
+
+    }
+
+    die () {
+
+        updateObjects = false;
+
+        window.setTimeout(() => {
+
+            document.location.reload(true);
+
+        }, 1000)
+
+        // TODO
 
     }
 

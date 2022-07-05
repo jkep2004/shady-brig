@@ -42,32 +42,27 @@ class Tile {
 
             case 'l': // Down ladder
 
-                this.image = imageHandler.sprites['ladder'][0];
-                this.object = new Ladder (this.pos.x, this.pos.y, Tile.size, Tile.size, 1);
-                this.level.ladders.push(this.object);
+                this.createLadder(+1);
 
                 break;
 
             case 'L': // Up ladder
 
-                this.image = imageHandler.sprites['ladder'][0];
-                this.object = new Ladder (this.pos.x, this.pos.y, Tile.size, Tile.size, -1);
-                this.level.ladders.push(this.object);
+                this.createLadder(-1);
 
                 break;
 
             case 'e': // Enemy
 
                 this.image = imageHandler.sprites['floor'][0];
-                this.parentLevel.enemies.push(new Enemy (this.pos.x, this.pos.y));
+                this.createEnemy();
 
                 break;
 
             case 'c': // Coin
 
                 this.image = imageHandler.sprites['floor'][0];
-                this.object = new Coin (this.pos.x + Tile.size / 2 - Coin.size / 2, this.pos.y + Tile.size / 2 - Coin.size / 2, this, this.level.coins.length);
-                this.level.coins.push(this.object);
+                this.createCoin();
 
                 break;
 
@@ -189,6 +184,31 @@ class Tile {
         if (this.show) image(this.image, this.pos.x, this.pos.y, Tile.size, Tile.size);
 
         if (this.object) this.object.draw();
+
+    }
+
+    createCoin () {
+
+        this.imageNum = 'c';
+        this.object = new Coin (this.pos.x + Tile.size / 2 - Coin.size / 2, this.pos.y + Tile.size / 2 - Coin.size / 2, this, this.level.coins.length);
+        this.level.coins.push(this.object);
+
+    }
+
+    createEnemy () {
+        
+        console.log(this.level.enemies)
+        this.imageNum = 'e'
+        this.level.enemies.push(new Enemy (this.pos.x, this.pos.y));
+
+    }
+
+    createLadder (direction) {
+
+        this.image = imageHandler.sprites['ladder'][0];
+        this.object = new Ladder (this.pos.x, this.pos.y, Tile.size, Tile.size, direction);
+        this.level.ladders.push(this.object);
+        this.imageNum = (direction == -1) ? 'L': 'l';
 
     }
 

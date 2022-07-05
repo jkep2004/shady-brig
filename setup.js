@@ -67,8 +67,8 @@ function setup () {
 
     Enemy.size = {
 
-        x: Math.floor(width / 96),
-        y: Math.floor(width / 32)
+        x: Tile.size,
+        y: Tile.size
 
     }
 
@@ -117,8 +117,5 @@ function setup () {
     // Create world
 
     world = new Surface (LEVELS[0]);
-
-    inputHandler.surface = world;
-    inputHandler.player = world.player;
 
 }

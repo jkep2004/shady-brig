@@ -34,6 +34,7 @@ class Coin extends Entity {
 
     collect (player) {
 
+        Coin.audio.time(0);
         Coin.audio.play();
         player.score ++;
 
