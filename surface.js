@@ -88,6 +88,7 @@ class Surface {
             for (let tile of row) {
 
                 if (tile) tile.edges = {};
+                if (tile) tile.mesh = {};
 
             }
 
@@ -180,6 +181,11 @@ class Surface {
                 }
 
                 let currentTile = tiles[indexY][indexX];
+
+                if (!up) currentTile.mesh['up'] = new Mesh (currentTile.pos.x, currentTile.pos.y - 1, Tile.size, 1);
+                if (!down) currentTile.mesh['down'] = new Mesh (currentTile.pos.x, currentTile.pos.y + Tile.size + 1, Tile.size, 1);
+                if (!left) currentTile.mesh['left'] = new Mesh (currentTile.pos.x - 1, currentTile.pos.y, 1, Tile.size);
+                if (!right) currentTile.mesh['right'] = new Mesh (currentTile.pos.x + Tile.size + 1, currentTile.pos.y, 1, Tile.size);
 
                 if (!up) currentTile.edges['up'] = new Edge (currentTile.index.x, currentTile.index.y, currentTile.pos.x, currentTile.pos.y - Edge.size.x, 'up', currentTile);
                 if (!down) currentTile.edges['down'] = new Edge (currentTile.index.x, currentTile.index.y, currentTile.pos.x, currentTile.pos.y + Edge.size.off, 'down', currentTile);

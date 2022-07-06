@@ -18,6 +18,8 @@ class Tile {
 
         }
 
+        this.mesh = {};
+
         this.edges = {};
 
         this.level = parentLevel;
