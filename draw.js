@@ -26,12 +26,13 @@ function draw () {
 
     if (updateObjects) CollisionHandler.playerObjectCollisions(world, world.player, world.enemies, world.coins, world.ladders, world.potions);
     if (updateObjects) CollisionHandler.playerWallCollisions(world, world.player);
+    
+    background(100); // Make background a light-grey
+    inputHandler.draw['lowHealth'](inputHandler, world.player);
 
     push(); // Save current translation
 
     translate(width / 2 - world.player.pos.x, height / 2 - world.player.pos.y);
-
-    background(100); // Make background a light-grey
 
     world.draw(); // Draw tiles and objects
     world.drawEdges('up', 'left'); // Draw top edges
@@ -42,7 +43,7 @@ function draw () {
 
     // DEBUG
     
-    if (updateObjects) Mesh.draw(world.player.pos.x, world.player.pos.y, world.player.size.x, world.player.size.y); // DEBUG - draw player collision
+    if (updateObjects) Mesh.draw(world.player.mesh.pos.x, world.player.mesh.pos.y, world.player.mesh.size.x, world.player.mesh.size.y); // DEBUG - draw player collision
     if (updateObjects) CollisionHandler.drawArrayCollisionBox(world.ladders);
     if (updateObjects) CollisionHandler.drawArrayCollisionBox(world.coins);
     if (updateObjects) CollisionHandler.drawArrayCollisionBox(world.enemies);
@@ -70,7 +71,6 @@ function draw () {
 
     pop();
 
-    inputHandler.draw['lowHealth'](inputHandler, world.player);
     inputHandler.draw['hotbar'](inputHandler);
     inputHandler.draw['hearts'](inputHandler, world.player);
     inputHandler.draw['coins'](inputHandler, world.player);

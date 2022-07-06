@@ -21,6 +21,7 @@ class Tile {
         this.mesh = {};
 
         this.edges = {};
+        this.surrounding = {};
 
         this.level = parentLevel;
 
@@ -168,6 +169,8 @@ class Tile {
                     
                     this.level.player.pos.x = this.pos.x + Player.size.x / 2;
                     this.level.player.pos.y = this.pos.y;
+                    this.level.player.mesh.pos.x = this.pos.x + Player.size.x / 2;
+                    this.level.player.mesh.pos.y = this.pos.y - (this.level.player.mesh.size.y - this.level.player.size.y);
                     
                 } else {
                     

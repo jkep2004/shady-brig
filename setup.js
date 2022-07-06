@@ -52,8 +52,8 @@ function setup () {
 
     Player.speed = {
 
-        x: Math.floor(width / 128),
-        y: Math.floor(width / 128)
+        x: Math.floor(width / 256),
+        y: Math.floor(width / 256)
 
     }
 

@@ -38,14 +38,14 @@ class CollisionHandler {
 
 		for (let enemy of enemies) {
 
-			if (Mesh.colliding(player.weapon, enemy)) {
+			if (Mesh.colliding(player.weapon.mesh, enemy)) {
 
 				enemy.kill();
 				continue;
 
 			}
 
-			if (Mesh.colliding(player, enemy)) {
+			if (Mesh.colliding(player.mesh, enemy)) {
 
 				player.hit();
 				continue;
@@ -56,7 +56,7 @@ class CollisionHandler {
 
 		for (let coin of coins) {
 
-			if (Mesh.colliding(coin, player)) {
+			if (Mesh.colliding(coin, player.mesh)) {
 
 				coin.collect(player);
 				continue;
@@ -67,7 +67,7 @@ class CollisionHandler {
 
 		for (let ladder of ladders) {
 
-			if (Mesh.colliding(player, ladder) && keys.has(InputHandler.control.interact)) {
+			if (Mesh.colliding(player.mesh, ladder) && keys.has(InputHandler.control.interact)) {
 
 				ladder.changeLevel(surface, player);
 
@@ -79,6 +79,8 @@ class CollisionHandler {
 
 	static playerWallCollisions = function (surface, player) {
 
+		let colliding = {};
+		
 		for (let row of surface.tiles) {
 
 			for (let tile of row) {
@@ -87,34 +89,37 @@ class CollisionHandler {
 
 				for (let [side, mesh] of Object.entries(tile.mesh)) {
 
-					if (Mesh.colliding(mesh, player)) {
+					if (Mesh.colliding(mesh, player.mesh)) {
 
-						switch (side) {
+						if (side == 'up' && Mesh.colliding(mesh, player.mesh) && keys.has(InputHandler.control.moveUp)) {
 
-							case 'up':
+							player.pos.y = mesh.pos.y + (player.mesh.size.y - player.size.y);
+							player.mesh.pos.y = mesh.pos.y;
+							colliding[side] = true;
 
-								player.pos.y = tile.pos.y;
+						}
 
-								break;
+						if (side == 'down' && Mesh.colliding(mesh, player.mesh) && keys.has(InputHandler.control.moveDown)) {
 
-							case 'down':
+							player.pos.y = mesh.pos.y - player.size.y;
+							player.mesh.pos.y = mesh.pos.y - player.mesh.size.y;
+							colliding[side] = true;
 
-								player.pos.y = tile.pos.y + Tile.size - player.size.y;
+						}
 
-								break;
+						if (side == 'left' && Mesh.colliding(mesh, player.mesh) && keys.has(InputHandler.control.moveLeft)) {
 
-							case 'left':
+							player.pos.x = mesh.pos.x;
+							player.mesh.pos.x = mesh.pos.x;
+							colliding[side] = true;
 
-								player.pos.x = tile.pos.x;
+						}
 
-								break;
+						if (side == 'right' && Mesh.colliding(mesh, player.mesh) && keys.has(InputHandler.control.moveRight)) {
 
-							case 'right':
-
-								player.pos.x = tile.pos.x + Tile.size - player.size.x;
-
-								break;
-
+							player.pos.x = mesh.pos.x - player.size.x;
+							player.mesh.pos.x = mesh.pos.x - player.mesh.size.x;
+							colliding[side] = true;
 
 						}
 
@@ -125,6 +130,8 @@ class CollisionHandler {
 			}
 
 		}
+
+		return colliding;
 
 	}
 

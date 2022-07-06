@@ -89,6 +89,13 @@ class Entity {
 		this.pos.x += this.speed.x * xDir * simRate;
 		this.pos.y += this.speed.y * yDir * simRate;
 
+		if (this.mesh) {
+
+			this.mesh.pos.x += this.speed.x * xDir * simRate;
+			this.mesh.pos.y += this.speed.y * yDir * simRate;
+
+		}
+
 		if (xDir == 0) return;
 
 		this.direction = Math.sign(xDir);

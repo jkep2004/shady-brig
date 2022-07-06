@@ -16,6 +16,7 @@ class Player extends Entity {
         this.last = {}
 
         this.weapon = new Weapon ();
+        this.mesh = new Mesh (this.pos.x, this.pos.y + this.size.y * 0.25, this.size.x, this.size.y * 0.75);
 
         this.maxHealth = 10;
         this.health = this.maxHealth;
@@ -136,11 +137,20 @@ class Player extends Entity {
 
         updateObjects = false;
 
+        let resetTime = 1000;
+        fadeAlpha = 0;
+        
+        window.setInterval(() => {
+
+            fadeAlpha += 10;
+
+        }, resetTime / 30);
+
         window.setTimeout(() => {
 
             document.location.reload(true);
 
-        }, 1000)
+        }, resetTime)
 
         // TODO
 

@@ -4,6 +4,8 @@ class Weapon extends Entity {
 
         super (posX, posY, sizeX, sizeY, 0, 0, image);
 
+        this.mesh = new Mesh (this.pos.x, this.pos.y, this.size.x, this.size.y);
+
     }
 
 }
