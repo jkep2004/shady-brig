@@ -39,10 +39,11 @@ function mouseReleased (event) {
 
 function mouseWheel (event) {
 
+    let potionColors = 4;
+
     let direction = Math.sign(event.deltaY);
 
-    inputHandler.hotbar.potionSelected = (inputHandler.hotbar.potionSelected - direction) % 4;
-    if (inputHandler.hotbar.potionSelected < 0) inputHandler.hotbar.potionSelected = 3;
+    inputHandler.hotbar.potionSelected = (inputHandler.hotbar.potionSelected - direction + potionColors) % potionColors;
 
 }
 
@@ -472,8 +473,6 @@ class InputHandler {
 
         if (keys.has('=') || keys.has('+')) {
 
-            console.log('Change health +1')
-
             player.changeHealth(1);
             keys.delete('=');
             keys.delete('+');
@@ -481,8 +480,6 @@ class InputHandler {
         }
 
         if (keys.has('-') || keys.has('_')) {
-
-            console.log('Change health -1')
 
             player.changeHealth(-1);
             keys.delete('-');
