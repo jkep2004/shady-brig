@@ -1,5 +1,39 @@
 class CollisionHandler {
 
+	static drawArrayMeshBox = function (array) {
+
+		for (let element of array) {
+
+			Mesh.draw(element.mesh.pos.x, element.mesh.pos.y, element.mesh.size.x, element.mesh.size.y);
+
+		}
+
+	}
+
+	static draw2dArrayMeshBox = function (array) {
+
+		for (let row of array) {
+
+			for (let element of row) {
+	
+				Mesh.draw(element.mesh.pos.x, element.mesh.pos.y, element.mesh.size.x, element.mesh.size.y);
+	
+			}
+
+		}
+
+	}
+
+	static drawDictMeshBox = function (dict) {
+
+		for (let [key, element] of Object.entries(dict)) {
+
+			Mesh.draw(element.mesh.pos.x, element.mesh.pos.y, element.mesh.size.x, element.mesh.size.y);
+
+		}
+
+	}
+
 	static drawArrayCollisionBox = function (array) {
 
 		for (let element of array) {
@@ -38,14 +72,14 @@ class CollisionHandler {
 
 		for (let enemy of enemies) {
 
-			if (Mesh.colliding(player.weapon.mesh, enemy)) {
+			if (Mesh.colliding(player.weapon.mesh, enemy.mesh)) {
 
 				enemy.kill();
 				continue;
 
 			}
 
-			if (Mesh.colliding(player.mesh, enemy)) {
+			if (Mesh.colliding(player.mesh, enemy.mesh)) {
 
 				player.hit();
 				continue;
@@ -56,7 +90,7 @@ class CollisionHandler {
 
 		for (let coin of coins) {
 
-			if (Mesh.colliding(coin, player.mesh)) {
+			if (Mesh.colliding(coin.mesh, player.mesh)) {
 
 				coin.collect(player);
 				continue;
@@ -67,7 +101,7 @@ class CollisionHandler {
 
 		for (let ladder of ladders) {
 
-			if (Mesh.colliding(player.mesh, ladder) && keys.has(InputHandler.control.interact)) {
+			if (Mesh.colliding(player.mesh, ladder.mesh) && keys.has(InputHandler.control.interact)) {
 
 				ladder.changeLevel(player);
 

@@ -11,6 +11,8 @@ class Coin extends Entity {
 
         this.sprites = Coin.images;
 
+        this.mesh = new Mesh (this.pos.x, this.pos.y, this.size.x, this.size.y);
+
         this.parent = parent;
         this.index = index;
 

@@ -45,14 +45,14 @@ function draw () {
     // DEBUG
     
     if (updateObjects) Mesh.draw(world.player.mesh.pos.x, world.player.mesh.pos.y, world.player.mesh.size.x, world.player.mesh.size.y); // DEBUG - draw player collision
-    if (updateObjects) CollisionHandler.drawArrayCollisionBox(world.ladders);
-    if (updateObjects) CollisionHandler.drawArrayCollisionBox(world.coins);
-    if (updateObjects) CollisionHandler.drawArrayCollisionBox(world.enemies);
-    if (updateObjects) CollisionHandler.drawArrayCollisionBox(world.potions);
-    if (updateObjects) CollisionHandler.drawArrayCollisionBox(world.switches['red']);
-    if (updateObjects) CollisionHandler.drawArrayCollisionBox(world.actuators['red']);
-    if (updateObjects) CollisionHandler.drawArrayCollisionBox(world.switches['blue']);
-    if (updateObjects) CollisionHandler.drawArrayCollisionBox(world.actuators['blue']);
+    if (updateObjects) CollisionHandler.drawArrayMeshBox(world.ladders);
+    if (updateObjects) CollisionHandler.drawArrayMeshBox(world.coins);
+    if (updateObjects) CollisionHandler.drawArrayMeshBox(world.enemies);
+    if (updateObjects) CollisionHandler.drawArrayMeshBox(world.potions);
+    if (updateObjects) CollisionHandler.drawArrayMeshBox(world.switches['red']);
+    if (updateObjects) CollisionHandler.drawArrayMeshBox(world.actuators['red']);
+    if (updateObjects) CollisionHandler.drawArrayMeshBox(world.switches['blue']);
+    if (updateObjects) CollisionHandler.drawArrayMeshBox(world.actuators['blue']);
 
     if (updateObjects) {
 

@@ -34,9 +34,9 @@ class Player extends Entity {
 
     draw () {
 
-        let indexY = (Math.floor(this.pos.y / Tile.size) >= 0 && Math.floor(this.pos.y / Tile.size) < this.surface.size.y) ? Math.floor(this.pos.y / Tile.size) : null;
+        let indexY = (Math.floor(this.pos.y / Tile.size) + 1 >= 0 && Math.floor(this.pos.y / Tile.size) + 1 < this.surface.size.y) ? Math.floor(this.pos.y / Tile.size) + 1 : null;
         let indexX = (Math.floor(this.pos.x / Tile.size) >= 0 && Math.floor(this.pos.x / Tile.size) < this.surface.size.x) ? Math.floor(this.pos.x / Tile.size) : null;
-
+        
         if (indexY && indexX && this.surface.tiles[indexY][indexX] && this.surface.tiles[indexY][indexX].object == null) {
 
             this.last = {

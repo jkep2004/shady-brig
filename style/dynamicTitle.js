@@ -25,7 +25,7 @@ let files = [
 let lines = 0;
 let read = 0;
 
-function add(n) {
+function count (n) {
 
   lines += n;
   read++;
@@ -40,7 +40,7 @@ function add(n) {
 
 for (let file of files) {
 
-  fetch(file).then(text => text.text()).then(e => add(e.split("\n").filter(x => x.trim().slice(0, 2) !== "//" && x.trim().length > 0 && x.match(/[a-zA-Z0-9]/gi)).length));
+  fetch(file).then(text => text.text()).then(e => count(e.split("\n").filter(x => x.trim().slice(0, 2) !== "//" && x.trim().length > 0 && x.match(/[a-zA-Z0-9]/gi)).length));
 
 }
  

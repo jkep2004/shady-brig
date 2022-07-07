@@ -45,15 +45,16 @@ class Tile {
 
             case 'l': // Down ladder
 
-                this.createLadder(+1);
+                this.createLadder(this.level, LEVELS[this.level.index.y + 1][0]);
 
                 break;
 
             case 'L': // Up ladder
 
-                this.createLadder(-1);
+                this.createLadder(this.level, LEVELS[this.level.index.y - 1][0]);
 
                 break;
+
 
             case 'e': // Enemy
 
@@ -174,7 +175,7 @@ class Tile {
                     
                 } else {
                     
-                    this.level.player = new Player (this.pos.x + Player.size.x / 2, this.pos.y, 0, 0, this.level);
+                    this.level.player = new Player (this.pos.x + Player.size.x / 2, this.pos.y, 0, {x: 0, y: 0}, this.level);
 
                 }
 
@@ -202,18 +203,17 @@ class Tile {
 
     createEnemy () {
         
-        console.log(this.level.enemies)
         this.imageNum = 'e'
-        this.level.enemies.push(new Enemy (this.pos.x, this.pos.y));
+        this.level.enemies.push(new Enemy (this.pos.x, this.pos.y, this.level));
 
     }
 
-    createLadder (direction) {
+    createLadder (currentSurface, nextLevel) {
 
         this.image = imageHandler.sprites['ladder'][0];
-        this.object = new Ladder (this.pos.x, this.pos.y, Tile.size, Tile.size, direction);
+        this.object = new Ladder (this.pos.x, this.pos.y, Tile.size, Tile.size, currentSurface, nextLevel);
         this.level.ladders.push(this.object);
-        this.imageNum = (direction == -1) ? 'L': 'l';
+        this.imageNum = (currentSurface.index.y > nextLevel.index.y) ? 'L': 'l';
 
     }
 

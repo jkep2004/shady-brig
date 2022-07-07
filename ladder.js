@@ -1,6 +1,6 @@
 class Ladder {
 
-    constructor (posX, posY, sizeX, sizeY, direction) {
+    constructor (posX, posY, sizeX, sizeY, currentSurface, nextLevel) {
 
         this.pos = {
 
@@ -16,19 +16,18 @@ class Ladder {
 
         }
 
-        this.direction = direction;
+        this.mesh = new Mesh (this.pos.x, this.pos.y, this.size.x, this.size.y);
 
-    }
+        this.currentSurface = currentSurface;
+        this.nextLevel = nextLevel;
 
-    draw () {
+    } 
 
+    draw () {return false;} // This is useless as the object is drawn as a tile sprite
 
+    changeLevel (player) {
 
-    }
-
-    changeLevel (surface, player) {
-
-        LEVELS[player.level] = Surface.saveLevel(surface, player);
+        LEVELS[this.currentSurface.index.y][this.currentSurface.index.x] = Surface.saveLevel(this.currentSurface, player);
 
         let timeout = 1000;
         let time = millis();
@@ -42,9 +41,7 @@ class Ladder {
 
         window.setTimeout(() => {
 
-            world = new Surface(LEVELS[player.level + this.direction], player);
-            player.level += this.direction;
-            player.surface = world;
+            world = Surface.loadLevel(this.nextLevel, player);
 
         }, Math.floor(timeout / 2))
 

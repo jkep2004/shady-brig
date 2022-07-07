@@ -237,7 +237,7 @@ class Surface {
                 if (tile.imageNum == 'c' && tile.object == null) tile.imageNum = 0;
                 if (tile.imageNum == 'P') tile.imageNum = 0;
                 if (tile.imageNum == 'e') tile.imageNum = 0;
-alpha
+
             }
 
         }
@@ -257,17 +257,15 @@ alpha
 
         code = Surface.surfaceToLevel(surface.tiles);
 
-        return new Level (code, surface.size.x, surface.size.y);
+        return new Level (surface.index.x, surface.index.y, surface.size.x, surface.size.y, code);
 
     }
 
-    static loadLevel = function (player, levelChange) {
+    static loadLevel = function (newLevel, player) {
 
-        let newLevel = player.level + levelChange;
-
-        let surface = LEVELS[newLevel];
+        let surface = new Surface (newLevel, player);
         surface.player.score = player.score;
-        surface.player.level = newLevel;
+        surface.player.surface = surface;
 
         return surface;
 
@@ -276,10 +274,18 @@ alpha
     constructor (level, player = null) {
 
         let levelCode = level.code;
+
         this.size = {
 
             x: level.size.x,
             y: level.size.y
+
+        }
+
+        this.index = {
+
+            x: level.index.x,
+            y: level.index.y
 
         }
         
@@ -385,6 +391,31 @@ alpha
                 }
 
             }
+
+        }
+
+    }
+
+    updateEnemies () {
+
+        // TODO - add a*
+
+        for (let enemy of this.enemies) {
+
+            let update = {
+
+                x: 0,
+                y: 0
+
+            };
+
+            update.x = Math.sign(this.player.mesh.pos.x + (this.player.mesh.size.x / 2) - (enemy.mesh.pos.x + (enemy.mesh.size.x / 2)));
+            update.y = Math.sign(this.player.mesh.pos.y + (this.player.mesh.size.y / 2) - (enemy.mesh.pos.y + (enemy.mesh.size.y / 2)));
+
+            if (update.x && Math.abs(this.player.mesh.pos.x + (this.player.mesh.size.x / 2) - (enemy.mesh.pos.x + (enemy.mesh.size.x / 2))) < Tile.size / 16) update.x = 0;
+            if (update.y && Math.abs(this.player.mesh.pos.y + (this.player.mesh.size.y / 2) - (enemy.mesh.pos.y + (enemy.mesh.size.y / 2))) < Tile.size / 16) update.y = 0;
+
+            enemy.update(update.x, update.y);
 
         }
 
