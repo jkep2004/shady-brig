@@ -69,7 +69,7 @@ class CollisionHandler {
 
 			if (Mesh.colliding(player.mesh, ladder) && keys.has(InputHandler.control.interact)) {
 
-				ladder.changeLevel(surface, player);
+				ladder.changeLevel(player);
 
 			}
 
@@ -78,8 +78,6 @@ class CollisionHandler {
 	}
 
 	static entityToWall = function (surface, entity, sideCheck) {
-
-		let colliding = {};
 		
 		for (let row of surface.tiles) {
 
@@ -95,7 +93,7 @@ class CollisionHandler {
 
 							entity.pos.y = mesh.pos.y + (entity.mesh.size.y - entity.size.y);
 							entity.mesh.pos.y = mesh.pos.y;
-							colliding[side] = true;
+							return true;
 
 						}
 
@@ -103,7 +101,7 @@ class CollisionHandler {
 
 							entity.pos.y = mesh.pos.y - entity.size.y;
 							entity.mesh.pos.y = mesh.pos.y - entity.mesh.size.y;
-							colliding[side] = true;
+							return true;
 
 						}
 
@@ -111,7 +109,7 @@ class CollisionHandler {
 
 							entity.pos.x = mesh.pos.x;
 							entity.mesh.pos.x = mesh.pos.x;
-							colliding[side] = true;
+							return true;
 
 						}
 
@@ -119,7 +117,7 @@ class CollisionHandler {
 
 							entity.pos.x = mesh.pos.x - entity.size.x;
 							entity.mesh.pos.x = mesh.pos.x - entity.mesh.size.x;
-							colliding[side] = true;
+							return true;
 
 						}
 
@@ -131,7 +129,7 @@ class CollisionHandler {
 
 		}
 
-		return colliding;
+		return false;
 
 	}
 
