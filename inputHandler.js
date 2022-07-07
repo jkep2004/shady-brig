@@ -212,7 +212,7 @@ class InputHandler {
 
             }
 
-            let option, potionType, imageIndex;
+            let option, potionType, imageIndex, ladderDirection;
 
             if (keys.has('shift')) {
 
@@ -243,6 +243,14 @@ class InputHandler {
 
                 }
 
+                if (item == 'ladder') {
+
+                    if (!keys.has('control')) ladderDirection = (keys.has('shift')) ? 'up' : 'down';
+
+                    if (keys.has('control'))ladderDirection = (keys.has('shift')) ? 'right' : 'left';
+
+                }
+
                 if (imageIndex == null) imageIndex = 0;
 
                 let currentImage = imageHandler.sprites[`${item}`][imageIndex];
@@ -256,7 +264,16 @@ class InputHandler {
                 textAlign(LEFT, BOTTOM);
                 textStyle(BOLD);
                 textSize(width / 128);
-                text(`${self.hotbar.objects.length - index}.`, width - ((pos.x + pos.off) * (index + 1)) + size.x / 16, pos.y + size.y);
+                
+                if (item != 'ladder') {
+
+                    text(`${self.hotbar.objects.length - index}.`, width - ((pos.x + pos.off) * (index + 1)) + size.x / 16, pos.y + size.y);
+
+                } else {
+
+                    text(`${self.hotbar.objects.length - index}. ${ladderDirection}`, width - ((pos.x + pos.off) * (index + 1)) + size.x / 16, pos.y + size.y);
+
+                }
 
             }
 
@@ -526,7 +543,35 @@ class InputHandler {
 
                     case 'ladder':
 
-                        
+                        let xOff = 0, yOff = 0;
+
+                        if (keys.has('control')) {
+
+                            if (keys.has('shift')) {
+
+                                xOff = 1;
+
+                            } else {
+
+                                xOff = -1;
+
+                            }
+
+                        } else {
+
+                            if (keys.has('shift')) {
+
+                                yOff = -1;
+
+                            } else {
+
+                                yOff = 1;
+
+                            }
+
+                        }
+
+                        surface.tiles[index.y][index.x].createLadder(surface, LEVELS[surface.index.y + yOff][surface.index.x + xOff]);
 
                         break;
 
