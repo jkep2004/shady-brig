@@ -50,14 +50,14 @@ class Player extends Entity {
 
         if (!this.show) return;
 
+        push();
+
+        scale(this.direction, 1);
+
         if (this.isHit) {
 
-            push();
-
-            scale(this.direction, 1);
-
             image(Player.images['hit'], this.direction * this.pos.x, this.pos.y, this.direction * this.size.x, this.size.y);
-
+            
             pop();
             return;
 
@@ -65,29 +65,19 @@ class Player extends Entity {
 
         if (this.moving) {
 
-            push();
-
-            scale(this.direction, 1);
-
-            image(Player.images['run'][Math.floor(this.animationState)], this.direction * this.size.x, this.pos.y, this.direction * this.size.x, this.size.y);
+            image(Player.images['run'][Math.floor(this.animationState)], this.direction * this.pos.x, this.pos.y, this.direction * this.size.x, this.size.y);
 
             this.animationState = (this.animationState + (this.animationRate * 2 * simRate)) % 4;
 
-            pop();
-
         } else {
-
-            push();
-
-            scale(this.direction, 1);
 
             image(Player.images['idle'][Math.floor(this.animationState)], this.direction * this.pos.x, this.pos.y, this.direction * this.size.x, this.size.y);
 
             this.animationState = (this.animationState + (this.animationRate * simRate)) % 4;
 
-            pop();
-
         }
+
+        pop();
 
     }
 
