@@ -25,7 +25,6 @@ function draw () {
     if (updateObjects) inputHandler.handleKeyboard(keys, world, world.player);
 
     if (updateObjects) CollisionHandler.playerObjectCollisions(world, world.player, world.enemies, world.coins, world.ladders, world.potions);
-    if (updateObjects) CollisionHandler.playerWallCollisions(world, world.player);
     
     background(100); // Make background a light-grey
     inputHandler.draw['lowHealth'](inputHandler, world.player);

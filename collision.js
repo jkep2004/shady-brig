@@ -77,7 +77,7 @@ class CollisionHandler {
 
 	}
 
-	static playerWallCollisions = function (surface, player) {
+	static entityToWall = function (surface, entity, sideCheck) {
 
 		let colliding = {};
 		
@@ -89,36 +89,36 @@ class CollisionHandler {
 
 				for (let [side, mesh] of Object.entries(tile.mesh)) {
 
-					if (Mesh.colliding(mesh, player.mesh)) {
+					if (Mesh.colliding(mesh, entity.mesh)) {
 
-						if (side == 'up' && Mesh.colliding(mesh, player.mesh) && keys.has(InputHandler.control.moveUp)) {
+						if (side == sideCheck && side == 'up' && Mesh.colliding(mesh, entity.mesh)) {
 
-							player.pos.y = mesh.pos.y + (player.mesh.size.y - player.size.y);
-							player.mesh.pos.y = mesh.pos.y;
+							entity.pos.y = mesh.pos.y + (entity.mesh.size.y - entity.size.y);
+							entity.mesh.pos.y = mesh.pos.y;
 							colliding[side] = true;
 
 						}
 
-						if (side == 'down' && Mesh.colliding(mesh, player.mesh) && keys.has(InputHandler.control.moveDown)) {
+						if (side == sideCheck && side == 'down' && Mesh.colliding(mesh, entity.mesh)) {
 
-							player.pos.y = mesh.pos.y - player.size.y;
-							player.mesh.pos.y = mesh.pos.y - player.mesh.size.y;
+							entity.pos.y = mesh.pos.y - entity.size.y;
+							entity.mesh.pos.y = mesh.pos.y - entity.mesh.size.y;
 							colliding[side] = true;
 
 						}
 
-						if (side == 'left' && Mesh.colliding(mesh, player.mesh) && keys.has(InputHandler.control.moveLeft)) {
+						if (side == sideCheck && side == 'left' && Mesh.colliding(mesh, entity.mesh)) {
 
-							player.pos.x = mesh.pos.x;
-							player.mesh.pos.x = mesh.pos.x;
+							entity.pos.x = mesh.pos.x;
+							entity.mesh.pos.x = mesh.pos.x;
 							colliding[side] = true;
 
 						}
 
-						if (side == 'right' && Mesh.colliding(mesh, player.mesh) && keys.has(InputHandler.control.moveRight)) {
+						if (side == sideCheck && side == 'right' && Mesh.colliding(mesh, entity.mesh)) {
 
-							player.pos.x = mesh.pos.x - player.size.x;
-							player.mesh.pos.x = mesh.pos.x - player.mesh.size.x;
+							entity.pos.x = mesh.pos.x - entity.size.x;
+							entity.mesh.pos.x = mesh.pos.x - entity.mesh.size.x;
 							colliding[side] = true;
 
 						}
