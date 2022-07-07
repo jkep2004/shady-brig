@@ -24,6 +24,8 @@ function draw () {
     if (updateObjects) inputHandler.handleMouse(keys, world, world.player);
     if (updateObjects) inputHandler.handleKeyboard(keys, world, world.player);
 
+    if (updateObjects) world.updateEnemies();
+
     if (updateObjects) CollisionHandler.playerObjectCollisions(world, world.player, world.enemies, world.coins, world.ladders, world.potions);
     
     background(100); // Make background a light-grey
