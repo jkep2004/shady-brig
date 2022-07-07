@@ -86,6 +86,8 @@ class Entity {
 
 	update (xDir, yDir) {
 
+		if (xDir || yDir) this.moving = true;
+
 		this.pos.x += this.speed.x * xDir * simRate;
 		this.mesh.pos.x += this.speed.x * xDir * simRate;
 		CollisionHandler.entityToWall(this.surface, this, 'left');
@@ -95,7 +97,6 @@ class Entity {
 		this.mesh.pos.y += this.speed.y * yDir * simRate;
 		CollisionHandler.entityToWall(this.surface, this, 'up');
 		CollisionHandler.entityToWall(this.surface, this, 'down');
-
 
 		if (xDir == 0) return;
 
