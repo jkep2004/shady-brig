@@ -247,8 +247,8 @@ class Surface {
             let indexX = Math.floor(enemy.pos.x / Tile.size);
             let indexY = Math.floor(enemy.pos.y / Tile.size);
 
-            surface.tiles[indexY][indexX].imageNum = 'e';
-
+            if (indexY > 0 && indexY < surface.size.y && indexX > 0 && indexX < surface.size.x) surface.tiles[indexY][indexX].imageNum = 'e';
+ 
         }
 
         surface.tiles[surface.player.last.y][surface.player.last.x].imageNum = 'P';

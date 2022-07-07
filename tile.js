@@ -45,13 +45,25 @@ class Tile {
 
             case 'l': // Down ladder
 
-                this.createLadder(this.level, LEVELS[this.level.index.y + 1][0]);
+                this.createLadder(this.level, LEVELS[this.level.index.y + 1][this.level.index.x]);
 
                 break;
 
             case 'L': // Up ladder
 
-                this.createLadder(this.level, LEVELS[this.level.index.y - 1][0]);
+                this.createLadder(this.level, LEVELS[this.level.index.y - 1][this.level.index.x]);
+
+                break;
+
+            case 'j': // Left ladder
+
+                this.createLadder(this.level, LEVELS[this.level.index.y][this.level.index.x - 1]);
+
+                break;
+
+            case 'J': // Right ladder
+
+                this.createLadder(this.level, LEVELS[this.level.index.y][this.level.index.x + 1]);
 
                 break;
 
@@ -172,7 +184,10 @@ class Tile {
                     this.level.player.pos.y = this.pos.y;
                     this.level.player.mesh.pos.x = this.pos.x + Player.size.x / 2;
                     this.level.player.mesh.pos.y = this.pos.y - (this.level.player.mesh.size.y - this.level.player.size.y);
-                    
+
+                    this.level.player.last.x = this.index.x;
+                    this.level.player.last.y = this.index.y;
+
                 } else {
                     
                     this.level.player = new Player (this.pos.x + Player.size.x / 2, this.pos.y, 0, {x: 0, y: 0}, this.level);
@@ -213,7 +228,11 @@ class Tile {
         this.image = imageHandler.sprites['ladder'][0];
         this.object = new Ladder (this.pos.x, this.pos.y, Tile.size, Tile.size, currentSurface, nextLevel);
         this.level.ladders.push(this.object);
-        this.imageNum = (currentSurface.index.y > nextLevel.index.y) ? 'L': 'l';
+
+        console.log(currentSurface, nextLevel)
+
+        if (currentSurface.index.y != nextLevel.index.y) this.imageNum = (currentSurface.index.y > nextLevel.index.y) ? 'L': 'l';
+        if (currentSurface.index.x != nextLevel.index.x) this.imageNum = (currentSurface.index.x < nextLevel.index.x) ? 'J': 'j';
 
     }
 

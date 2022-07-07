@@ -116,6 +116,6 @@ function setup () {
 
     // Create world
 
-    world = new Surface (LEVELS[0][0]);
+    world = new Surface (LEVELS[0][2]);
 
 }

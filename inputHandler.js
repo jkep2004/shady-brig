@@ -526,9 +526,7 @@ class InputHandler {
 
                     case 'ladder':
 
-                        let direction = (keys.has('shift')) ? -1: 1;
-
-                        surface.tiles[index.y][index.x].createLadder(direction);
+                        
 
                         break;
 
