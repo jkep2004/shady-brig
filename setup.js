@@ -74,8 +74,8 @@ function setup () {
 
     Enemy.speed = {
 
-        x: Math.floor(width / 320),
-        y: Math.floor(width / 320)
+        x: Player.speed.x / 2,
+        y: Player.speed.y / 2
 
     }
 
@@ -116,6 +116,6 @@ function setup () {
 
     // Create world
 
-    world = new Surface (LEVELS[0]);
+    world = new Surface (LEVELS[0][0]);
 
 }
