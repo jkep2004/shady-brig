@@ -1,7 +1,3 @@
-let lines = 0;
-let read = 0;
-let length = 1;
-
 let files = [
 
   'audioHandler.js',
@@ -25,25 +21,27 @@ let files = [
   'weapon.js'
 
 ]
+ 
+let lines = 0;
+let read = 0;
 
-/**Counts lines within file and changes document title to the total
- * 
- * @param {Number} n \<int> ??
- * 
- * @author Luc
- * 
- */
+function add(n) {
 
-function lineCount (n) {
   lines += n;
   read++;
 
-  if (read === length) {
+  if (read === files.length) {
 
     document.title = `Shady Brig - ${lines}`;
 
   }
-  
+
 }
 
-fetch('draw.js').then(text => text.text()).then(e => lineCount(e.split('\n').filter(x => x.trim().slice(0, 2) !== '//' && x.trim().length > 0 && x.match(/[a-zA-Z0-9]/gi)).length));
+for (let file of files) {
+
+  fetch(file).then(text => text.text()).then(e => add(e.split("\n").filter(x => x.trim().slice(0, 2) !== "//" && x.trim().length > 0 && x.match(/[a-zA-Z0-9]/gi)).length));
+
+}
+ 
+ 
