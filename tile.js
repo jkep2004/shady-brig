@@ -28,6 +28,8 @@ class Tile {
         this.imageNum = tileType;
         this.object = null;
 
+        let type;
+
         switch (this.imageNum) {
 
             case '0': // Any floor sprite
@@ -94,58 +96,90 @@ class Tile {
 
                 break;
 
-            case 'b': // Blue tube
+            case 'b': // Blue tube - Mana
+
+                type = 'tube';
 
                 this.image = imageHandler.sprites['floor'][0];
+                this.object = new Potion (this.pos.x + Tile.size / 2 - Potion.size[type] / 2, this.pos.y + Tile.size / 2 - Potion.size[type] / 2, Potion.size[type], Potion.size[type], 'blue', type, this, this.level.potions.length);
+                this.level.potions.push(this.object);
 
                 break;
 
-            case 'B': // Blue flask
+            case 'B': // Blue flask - Mana
+
+                type = 'flask';
 
                 this.image = imageHandler.sprites['floor'][0];
+                this.object = new Potion (this.pos.x + Tile.size / 2 - Potion.size[type] / 2, this.pos.y + Tile.size / 2 - Potion.size[type] / 2, Potion.size[type], Potion.size[type], 'blue', type, this, this.level.potions.length);
+                this.level.potions.push(this.object);
 
                 break;
 
-            case 'g': // Green tube
+            case 'g': // Green tube - Build
+
+                type = 'tube';
 
                 this.image = imageHandler.sprites['floor'][0];
+                this.object = new Potion (this.pos.x + Tile.size / 2 - Potion.size[type] / 2, this.pos.y + Tile.size / 2 - Potion.size[type] / 2, Potion.size[type], Potion.size[type], 'green', type, this, this.level.potions.length);
+                this.level.potions.push(this.object);
 
                 break;
 
-            case 'G': // Green flask
+            case 'G': // Green flask - Build
+
+                type = 'flask';
 
                 this.image = imageHandler.sprites['floor'][0];
+                this.object = new Potion (this.pos.x + Tile.size / 2 - Potion.size[type] / 2, this.pos.y + Tile.size / 2 - Potion.size[type] / 2, Potion.size[type], Potion.size[type], 'green', type, this, this.level.potions.length);
+                this.level.potions.push(this.object);
 
                 break;
 
-            case 'o': // Orange tube
+            case 'o': // Orange tube - Heal
+
+                type = 'tube';
 
                 this.image = imageHandler.sprites['floor'][0];
+                this.object = new Potion (this.pos.x + Tile.size / 2 - Potion.size[type] / 2, this.pos.y + Tile.size / 2 - Potion.size[type] / 2, Potion.size[type], Potion.size[type], 'orange', type, this, this.level.potions.length);
+                this.level.potions.push(this.object);
 
                 break;
 
-            case 'O': // Orange flask
+            case 'O': // Orange flask - Heal
+
+                type = 'flask';
 
                 this.image = imageHandler.sprites['floor'][0];
+                this.object = new Potion (this.pos.x + Tile.size / 2 - Potion.size[type] / 2, this.pos.y + Tile.size / 2 - Potion.size[type] / 2, Potion.size[type], Potion.size[type], 'orange', type, this, this.level.potions.length);
+                this.level.potions.push(this.object);
 
                 break;
 
-            case 'y': // Yellow tube
+            case 'y': // Yellow tube - Key
+
+                type = 'tube';
 
                 this.image = imageHandler.sprites['floor'][0];
+                this.object = new Potion (this.pos.x + Tile.size / 2 - Potion.size[type] / 2, this.pos.y + Tile.size / 2 - Potion.size[type] / 2, Potion.size[type], Potion.size[type], 'yellow', type, this, this.level.potions.length);
+                this.level.potions.push(this.object);
 
                 break;
 
-            case 'Y': // Yellow flask
+            case 'Y': // Yellow flask - Key
+
+                type = 'flask';
 
                 this.image = imageHandler.sprites['floor'][0];
+                this.object = new Potion (this.pos.x + Tile.size / 2 - Potion.size[type] / 2, this.pos.y + Tile.size / 2 - Potion.size[type] / 2, Potion.size[type], Potion.size[type], 'yellow', type, this, this.level.potions.length);
+                this.level.potions.push(this.object);
 
                 break;
 
             case 's': // Red switch
 
                 this.image = imageHandler.sprites['floor'][0];
-                this.object = new Switch (this.pos.x, this.pos.y, 'red', actuated.red, this, this.level)
+                this.object = new Switch (this.pos.x, this.pos.y, 'red', actuated.red, this.level.actuators.length, this, this.level)
                 this.level.switches['red'].push(this.object);
 
                 break;
@@ -153,7 +187,7 @@ class Tile {
             case 'S': // Blue switch
 
                 this.image = imageHandler.sprites['floor'][0];
-                this.object = new Switch (this.pos.x, this.pos.y, 'blue', actuated.blue, this, this.level)
+                this.object = new Switch (this.pos.x, this.pos.y, 'blue', actuated.blue, this.level.actuators.length, this, this.level)
                 this.level.switches['blue'].push(this.object);
 
                 break;
@@ -161,7 +195,7 @@ class Tile {
             case 'a': // Red actuator
 
                 this.image = imageHandler.sprites['floor'][0];
-                this.object = new Actuator (this.pos.x, this.pos.y, 'red', actuated.red, this, this.level);
+                this.object = new Actuator (this.pos.x, this.pos.y, 'red', actuated.red, this.level.actuators.length, this, this.level);
                 this.level.actuators['red'].push(this.object);
 
                 break;
@@ -169,7 +203,7 @@ class Tile {
             case 'A': // Blue actuator
 
                 this.image = imageHandler.sprites['floor'][0];
-                this.object = new Actuator (this.pos.x, this.pos.y, 'blue', actuated.blue, this, this.level);
+                this.object = new Actuator (this.pos.x, this.pos.y, 'blue', actuated.blue, this.level.actuators.length, this, this.level);
                 this.level.actuators['blue'].push(this.object);
 
                 break;

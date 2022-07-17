@@ -235,6 +235,7 @@ class Surface {
                 if (!tile) continue;
 
                 if (tile.imageNum == 'c' && tile.object == null) tile.imageNum = 0;
+                if ((tile.imageNum == 'b' || tile.imageNum == 'B' || tile.imageNum == 'g' || tile.imageNum == 'G' || tile.imageNum == 'o' || tile.imageNum == 'O' || tile.imageNum == 'y' || tile.imageNum == 'Y') && tile.object == null) tile.imageNum = 0;
                 if (tile.imageNum == 'P') tile.imageNum = 0;
                 if (tile.imageNum == 'e') tile.imageNum = 0;
 
