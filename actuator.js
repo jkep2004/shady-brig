@@ -1,8 +1,21 @@
 class Actuator {
 
-    static images;
+    static images; // Contains 'red' and 'blue' actuator images
 
-    constructor (posX, posY, color, state = false, parent, surface) {
+    /** Controls switchable wall blocks (Actuators)
+     *  
+     *  @param {Number} posX \<int> X position of image on canvas
+	 *	@param {Number} posY \<int> Y position of image on canvas
+     *  @param {String} color \<str> Color of actuator 'blue' / 'red'
+     *  @param {Boolean} state \<bool> Actuator collisions on / off
+     *  @param {Tile} parent \<Tile> Tile this object is on
+     *  @param {Surface} surface \<Surface> Surface this object is on
+     * 
+     *  @author Jakob
+     * 
+     */
+
+    constructor (posX, posY, color, state = false, index, parent, surface) {
 
         this.pos = {
 
@@ -10,6 +23,15 @@ class Actuator {
             y: posY
 
         }
+
+        this.size = {
+
+            x: Tile.size,
+            y: Tile.size
+
+        }
+
+        this.index = index;
 
         this.parent = parent;
         this.surface = surface;
@@ -24,7 +46,7 @@ class Actuator {
 
     draw () {
 
-        if (this.show) image(this.images[this.state], this.pos.x, this.pos.y, Tile.size, Tile.size);
+        if (this.show) image(this.images[this.state], this.pos.x, this.pos.y, this.size.x, this.size.y);
 
     }
 
