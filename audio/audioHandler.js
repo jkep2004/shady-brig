@@ -39,12 +39,38 @@ class AudioHandler {
 
     loadTracks (...audioFiles) {
 
+        let volume = getItem('globalVolume');
+
+        if (volume == undefined) volume = 1;
+
         for (let fileName of audioFiles) {
 
             // Insert p5.audio track into playlist dictionary
             this.playlist[`${fileName}`] = createAudio(`../${this.path}/${fileName}.mp3`);
 
+
+            this.playlist[`${fileName}`].volume(volume);
+
         }
+
+    }
+
+    /** Toggles all audio volumes in playlist
+     * 
+     *  @author Jakob
+     * 
+     */
+
+    toggleMute () {
+
+        for (let [name, audio] of Object.entries(this.playlist)) {
+
+            audio.volume((audio.volume() == 1) ? 0: 1);
+
+            
+        }
+        
+        storeItem('globalVolume', (getItem('globalVolume') == 1) ? 0 : 1);
 
     }
 
