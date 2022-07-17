@@ -68,7 +68,7 @@ class CollisionHandler {
 
 	}
 
-	static playerObjectCollisions = function (surface, player, enemies, coins, ladders) {
+	static playerObjectCollisions = function (surface, player, enemies, coins, ladders, potions) {
 
 		for (let enemy of enemies) {
 
@@ -104,6 +104,18 @@ class CollisionHandler {
 			if (Mesh.colliding(player.mesh, ladder.mesh) && keys.has(InputHandler.control.interact)) {
 
 				ladder.changeLevel(player);
+				continue;
+
+			}
+
+		}
+
+		for (let potion of potions) {
+
+			if (Mesh.colliding(player.mesh, potion.mesh)) {
+
+				potion.effect(player);
+				continue;
 
 			}
 
@@ -205,6 +217,8 @@ class Mesh {
 			y: sizeY
 
 		}
+
+		this.collide = true;
 
 	}
 
