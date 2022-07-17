@@ -60,6 +60,8 @@ class Entity {
 		this.image = image;
 		this.show = true;
 
+		this.dir = {x: 0, y:0};
+
     }
 
 	/** Draw entity on canvas
@@ -86,6 +88,8 @@ class Entity {
 
 	update (xDir, yDir) {
 
+		this.dir = {x: xDir, y: yDir};
+
 		if (xDir || yDir) this.moving = true;
 
 		this.pos.x += this.speed.x * xDir * simRate;
@@ -100,7 +104,7 @@ class Entity {
 
 		if (xDir == 0) return;
 
-		this.direction = Math.sign(xDir);
+		this.imageDirection = Math.sign(xDir);
 
 	}
 
