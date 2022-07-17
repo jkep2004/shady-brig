@@ -11,6 +11,7 @@ class Player extends Entity {
 
         this.score = score;
         this.level = level;
+        this.keys = 0;
 
         this.surface = parentLevel;
         this.last = {}
@@ -25,7 +26,7 @@ class Player extends Entity {
         this.hitTimeout;
 
         this.moving = false;
-        this.direction = 1;
+        this.imageDirection = 1;
 
         this.animationState = 0;
         this.animationRate = Player.animationRate;
@@ -52,11 +53,11 @@ class Player extends Entity {
 
         push();
 
-        scale(this.direction, 1);
+        scale(this.imageDirection, 1);
 
         if (this.isHit) {
 
-            image(Player.images['hit'], this.direction * this.pos.x, this.pos.y, this.direction * this.size.x, this.size.y);
+            image(Player.images['hit'], this.imageDirection * this.pos.x, this.pos.y, this.imageDirection * this.size.x, this.size.y);
             
             pop();
             return;
@@ -65,13 +66,13 @@ class Player extends Entity {
 
         if (this.moving) {
 
-            image(Player.images['run'][Math.floor(this.animationState)], this.direction * this.pos.x, this.pos.y, this.direction * this.size.x, this.size.y);
+            image(Player.images['run'][Math.floor(this.animationState)], this.imageDirection * this.pos.x, this.pos.y, this.imageDirection * this.size.x, this.size.y);
 
             this.animationState = (this.animationState + (this.animationRate * 2 * simRate)) % 4;
 
         } else {
 
-            image(Player.images['idle'][Math.floor(this.animationState)], this.direction * this.pos.x, this.pos.y, this.direction * this.size.x, this.size.y);
+            image(Player.images['idle'][Math.floor(this.animationState)], this.imageDirection * this.pos.x, this.pos.y, this.imageDirection * this.size.x, this.size.y);
 
             this.animationState = (this.animationState + (this.animationRate * simRate)) % 4;
 
