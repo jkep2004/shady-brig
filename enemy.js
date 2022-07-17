@@ -11,7 +11,7 @@ class Enemy extends Entity {
         super(posX, posY, Enemy.size.x, Enemy.size.y, Enemy.speed.x, Enemy.speed.y, Enemy.images['idle'][0]);
 
         this.moving = false;
-        this.direction = 1;
+        this.imageDirection = 1;
 
         this.mesh = new Mesh (this.pos.x, this.pos.y, this.size.x, this.size.y);
 
@@ -28,17 +28,17 @@ class Enemy extends Entity {
 
         push();
 
-        scale(this.direction, 1);
+        scale(this.imageDirection, 1);
 
         if (this.moving) {
 
-            image(Enemy.images['run'][Math.floor(this.animationState)], this.direction * this.pos.x, this.pos.y, this.direction * this.size.x, this.size.y);
+            image(Enemy.images['run'][Math.floor(this.animationState)], this.imageDirection * this.pos.x, this.pos.y, this.imageDirection * this.size.x, this.size.y);
 
             this.animationState = (this.animationState + (this.animationRate * 2 * simRate)) % 4;
 
         } else {
 
-            image(Enemy.images['idle'][Math.floor(this.animationState)], this.direction * this.pos.x, this.pos.y, this.direction * this.size.x, this.size.y);
+            image(Enemy.images['idle'][Math.floor(this.animationState)], this.imageDirection * this.pos.x, this.pos.y, this.imageDirection * this.size.x, this.size.y);
 
             this.animationState = (this.animationState + (this.animationRate * simRate)) % 4;
 
