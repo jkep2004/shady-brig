@@ -59,6 +59,7 @@ class InputHandler {
         moveRight: 'd',
         interact: ' ',
         getMap: 'p',
+        mute: 'm',
 
     }
 
@@ -164,7 +165,47 @@ class InputHandler {
 
         }
 
-        this.draw['coins'] = function (self, player) {
+        this.draw['score'] = function (self, player) {
+
+            let size = {
+
+                x: Tile.size,
+                y: Tile.size * 0.9
+
+            }
+
+            let pos = {
+
+                x: size.x,
+                y: height / 128,
+                off: width / 128
+
+            }
+
+            if (millis() - self.hotbar.coin.update > 1000 / self.hotbar.coin.animationRate) {
+
+                self.hotbar.coin.update = millis();
+                self.hotbar.coin.animationState = (self.hotbar.coin.animationState + 1) % self.hotbar.coin.images.length;
+
+            }
+
+            // let coinImage = self.hotbar.coin.images[self.hotbar.coin.animationState];
+            let coinImage = self.hotbar.coin.images[0];
+            let totalCoins = player.score;
+
+            fill(255);
+            strokeWeight(4);
+            stroke(0);
+
+            textAlign(LEFT, TOP);
+            textStyle(BOLD);
+            textSize(size.y);
+
+            image(coinImage, 0, pos.y, size.x, size.y);
+            text(`: ${totalCoins}`, size.x, pos.y * 1.625);
+
+            image(imageHandler.sprites['potion/flask'][3], 0, pos.y + size.y, size.x, size.y);
+            text(`: ${player.keys}`, size.x, (pos.y * 1.625) + size.y);
 
         }
 
@@ -251,6 +292,8 @@ class InputHandler {
 
                 }
 
+                if (item == 'spikes') imageIndex = (keys.has('shift')) ? 3 : 0;
+
                 if (imageIndex == null) imageIndex = 0;
 
                 let currentImage = imageHandler.sprites[`${item}`][imageIndex];
@@ -293,7 +336,13 @@ class InputHandler {
                 'potion'
             ].reverse(),
             color: ['red', 'blue'],
-            potion: ['tube', 'flask']
+            potion: ['tube', 'flask'],
+            coin: {
+                animationState: 0,
+                animationRate: 4,
+                update: 0,
+                images: imageHandler.sprites['coin']
+            }
 
         }
 
@@ -478,7 +527,17 @@ class InputHandler {
 
         if (keys.has(InputHandler.control.getMap)) {
 
-            document.write(Surface.surfaceToLevel(surface.tiles));
+            console.log(Surface.surfaceToLevel(surface.tiles));
+
+            keys.delete(InputHandler.control.getMap);
+
+        }
+
+        if (keys.has(InputHandler.control.mute)) {
+
+            audioHandler.toggleMute();
+
+            keys.delete(InputHandler.control.mute);
 
         }
 
@@ -490,7 +549,7 @@ class InputHandler {
 
         if (keys.has('=') || keys.has('+')) {
 
-            player.changeHealth(1);
+            player.score ++;
             keys.delete('=');
             keys.delete('+');
 
@@ -498,7 +557,7 @@ class InputHandler {
 
         if (keys.has('-') || keys.has('_')) {
 
-            player.changeHealth(-1);
+            player.score --;
             keys.delete('-');
             keys.delete('_');
 
@@ -525,6 +584,7 @@ class InputHandler {
             if (surface.tiles[index.y] && surface.tiles[index.y][index.x]) {
 
                 surface.tiles[index.y][index.x].image = imageHandler.sprites['floor'][0];
+
                 surface.tiles[index.y][index.x].object = null;
 
                 switch (this.hotbar.objects[this.hotbar.objects.length - this.hotbar.selected]) {
@@ -574,6 +634,43 @@ class InputHandler {
                         surface.tiles[index.y][index.x].createLadder(surface, LEVELS[surface.index.y + yOff][surface.index.x + xOff]);
 
                         break;
+
+                    case 'potion':
+
+                        let potionColor;
+
+                        switch (this.hotbar.potionSelected) {
+
+                            case 0:
+
+                                potionColor = 'blue';
+                                
+                                break;
+
+                            case 1:
+
+                                potionColor = 'green';
+
+                                break;
+
+                            case 2:
+
+                                potionColor = 'orange';
+
+                                break;
+
+                            case 3:
+
+                                potionColor = 'yellow';
+
+                                break;
+                            
+                        }
+
+                        surface.tiles[index.y][index.x].object = new Potion (surface.tiles[index.y][index.x].pos.x + Tile.size / 2 - Potion.size[(keys.has('shift')) ? 'flask': 'tube'] / 2, surface.tiles[index.y][index.x].pos.y + Tile.size / 2 - Potion.size[(keys.has('shift')) ? 'flask': 'tube'] / 2, Potion.size[(keys.has('shift')) ? 'flask': 'tube'], Potion.size[(keys.has('shift')) ? 'flask': 'tube'], potionColor, (keys.has('shift')) ? 'flask': 'tube', surface.tiles[index.y][index.x], surface.potions.length);
+                        surface.potions.push(surface.tiles[index.y][index.x].object);
+
+                        surface.tiles[index.y][index.x].imageNum = (keys.has('shift')) ? potionColor[0].toUpperCase() : potionColor[0].toLowerCase();
 
                 }
 
