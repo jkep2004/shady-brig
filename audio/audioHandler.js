@@ -46,7 +46,7 @@ class AudioHandler {
         for (let fileName of audioFiles) {
 
             // Insert p5.audio track into playlist dictionary
-            this.playlist[`${fileName}`] = createAudio(`../${this.path}/${fileName}.mp3`);
+            this.playlist[`${fileName}`] = createAudio(`/${this.path}/${fileName}.mp3`);
 
 
             this.playlist[`${fileName}`].volume(volume);

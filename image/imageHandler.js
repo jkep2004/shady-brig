@@ -64,7 +64,7 @@ class ImageHandler {
         for (let fileName of imageFiles) {
 
             // Insert p5.Image into sprite dictionary
-            this.sprites[`${fileName}`] = [loadImage(`../${this.path}/${fileName}.png`)]; // Load p5.Image
+            this.sprites[`${fileName}`] = [loadImage(`/${this.path}/${fileName}.png`)]; // Load p5.Image
 
         }
 
@@ -93,7 +93,7 @@ class ImageHandler {
                 let fileName = (header.includes("/")) ? header.split("/")[1] : header; /* If file is within another folder remove the folder name
                 "folderName/fileName" => "fileName" */
 
-                this.sprites[`${header}`].push(loadImage(`../${this.path}/${header}/${fileName}${index}.png`)); // Load p5.Image
+                this.sprites[`${header}`].push(loadImage(`/${this.path}/${header}/${fileName}${index}.png`)); // Load p5.Image
 
             }
 
@@ -103,7 +103,7 @@ class ImageHandler {
 
     /** Loads a tile set to use as an animated favicon
      * 
-     * @param  {...any} tileSet \<Array> Array of [lower, upper, "imageName"]
+     * @param  {...Any} tileSet \<Array> Array of [lower, upper, "imageName"]
      *  - lower - Start suffix of tile set (Eg Image0)
      *  - upper - End suffix of tile set (Eg Image9)
      *  - imageName - File name of tile set
@@ -130,7 +130,7 @@ class ImageHandler {
 
         for (let index = lower; index <= upper; index ++) {
 
-            this.icon.sprites.push(`../${this.path}/${header}/${fileName}${index}.png`); // Push sprite path to array
+            this.icon.sprites.push(`/${this.path}/${header}/${fileName}${index}.png`); // Push sprite path to array
 
         }
 
