@@ -74,7 +74,7 @@ function draw () {
 
     inputHandler.draw['hotbar'](inputHandler);
     inputHandler.draw['hearts'](inputHandler, world.player);
-    inputHandler.draw['coins'](inputHandler, world.player);
+    inputHandler.draw['score'](inputHandler, world.player);
 
     if (!updateObjects) {
 
