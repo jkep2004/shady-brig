@@ -13,7 +13,7 @@ class Enemy extends Entity {
         this.moving = false;
         this.imageDirection = 1;
 
-        this.mesh = new Mesh (this.pos.x, this.pos.y, this.size.x, this.size.y);
+        this.mesh = new Mesh (this.pos.x , this.pos.y, this.size.x, this.size.y);
 
         this.surface = surface;
 
