@@ -14,6 +14,7 @@ let files = [
   'ladder.js',
   'level.js',
   'player.js',
+  'potion.js',
   'preload.js',
   'setup.js',
   'surface.js',
