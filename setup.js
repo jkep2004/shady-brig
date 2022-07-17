@@ -106,6 +106,18 @@ function setup () {
 
     }
 
+    Potion.size = {
+        tube: Tile.size / 2,
+        flask: Tile.size / 1.7
+    };
+
+    Potion.images = {
+
+        'tube': imageHandler.sprites['potion/tube'],
+        'flask': imageHandler.sprites['potion/flask']
+
+    }
+
     Edge.size = {
 
         x: Tile.size,
