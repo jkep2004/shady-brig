@@ -39,16 +39,14 @@ class AudioHandler {
 
     loadTracks (...audioFiles) {
 
-        let volume = getItem('globalVolume');
+        let volume = getItem('globalVolume'); // Get local copy of volume
 
-        if (volume == undefined) volume = 1;
+        if (volume == undefined) volume = 1; // Set volume if no local copy
 
         for (let fileName of audioFiles) {
 
-            // Insert p5.audio track into playlist dictionary
+            // Insert p5.audio track into playlist dictionary at given volume
             this.playlist[`${fileName}`] = createAudio(`./${this.path}/${fileName}.mp3`);
-
-
             this.playlist[`${fileName}`].volume(volume);
 
         }

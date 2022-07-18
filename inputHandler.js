@@ -1,5 +1,5 @@
 const keys = new Map (); // Create empty map to store currently pressed keys
-var recentlyChanged = new Map ();
+var recentlyChanged = new Map (); // Map of recently changed tiles (Removed after InputHandler.tileEditCooldown)
 
 function keyPressed () {
 
@@ -39,19 +39,19 @@ function mouseReleased (event) {
 
 function mouseWheel (event) {
 
-    let potionColors = 4;
+    let potionColors = 4; // Amount of potion types
 
-    let direction = Math.sign(event.deltaY);
+    let direction = Math.sign(event.deltaY); // Direction of mouse scroll
 
-    inputHandler.hotbar.potionSelected = (inputHandler.hotbar.potionSelected - direction + potionColors) % potionColors;
+    inputHandler.hotbar.potionSelected = (inputHandler.hotbar.potionSelected - direction + potionColors) % potionColors; // Change selected potion
 
 }
 
 class InputHandler {
 
-    static tileEditCooldown = 500;
+    static tileEditCooldown = 500; // Ms time between updating tiles
 
-    static control = {
+    static control = { // Key bindings for game
 
         moveUp: 'w',
         moveDown: 's',
@@ -63,9 +63,27 @@ class InputHandler {
 
     }
 
+    /** Controls all input and UI
+     * 
+     *  @param {Surface} surface \<Surface> Surface input handler is effecting
+     *  @param {Player} player \<Player> Player input handler is effecting
+     * 
+     *  @author Jakob
+     * 
+     */
+
     constructor (surface = null, player = null) {
 
-        this.draw = {};
+        this.draw = {}; // Dictionary of user interface drawing functions
+
+        /** Draw all player hearts to screen (Top-right)
+         * 
+         *  @param {InputHandler} self \<InputHandler> This
+         *  @param {Player} player \<Player> Player UI is drawn for
+         * 
+         *  @author Jakob
+         * 
+         */
 
         this.draw['hearts'] = function (self, player) {
 
@@ -151,6 +169,15 @@ class InputHandler {
 
         }
 
+        /** Draws red flashing background when player is low health
+         * 
+         *  @param {InputHandler} self \<InputHandler> This
+         *  @param {Player} player \<Player> Player UI is drawn for
+         * 
+         *  @author Jakob
+         * 
+         */
+
         this.draw['lowHealth'] = function (self, player) {
 
             if (player.health <= player.maxHealth * 0.2) {
@@ -164,6 +191,15 @@ class InputHandler {
             }
 
         }
+
+        /** Draw coins and keys collected to screen (Top-left)
+         * 
+         *  @param {InputHandler} self \<InputHandler> This
+         *  @param {Player} player \<Player> Player UI is drawn for
+         * 
+         *  @author Jakob
+         * 
+         */
 
         this.draw['score'] = function (self, player) {
 
@@ -182,15 +218,17 @@ class InputHandler {
 
             }
 
-            if (millis() - self.hotbar.coin.update > 1000 / self.hotbar.coin.animationRate) {
+            // REMOVED
 
-                self.hotbar.coin.update = millis();
-                self.hotbar.coin.animationState = (self.hotbar.coin.animationState + 1) % self.hotbar.coin.images.length;
+            // if (millis() - self.hotbar.coin.update > 1000 / self.hotbar.coin.animationRate) {
 
-            }
+            //     self.hotbar.coin.update = millis();
+            //     self.hotbar.coin.animationState = (self.hotbar.coin.animationState + 1) % self.hotbar.coin.images.length;
 
-            // let coinImage = self.hotbar.coin.images[self.hotbar.coin.animationState];
-            let coinImage = self.hotbar.coin.images[0];
+            // }
+
+            let coinImage = self.hotbar.coin.images[self.hotbar.coin.animationState];
+
             let totalCoins = player.score;
 
             fill(255);
@@ -208,6 +246,15 @@ class InputHandler {
             text(`: ${player.keys}`, size.x, (pos.y * 1.625) + size.y);
 
         }
+
+        /** Draw UI box in given location
+         * 
+         *  @param {InputHandler} self \<InputHandler> This
+         *  @param {Player} player \<Player> Player UI is drawn for
+         * 
+         *  @author Jakob
+         * 
+         */
 
         this.draw['box'] = function (self, posX, posY, sizeX, sizeY, count) {
 
@@ -228,7 +275,16 @@ class InputHandler {
 
             image(imageHandler.sprites['floor'][0], posX, posY, sizeX, sizeY);
 
-        },
+        }
+
+        /** Draw player hotbar to screen
+         * 
+         *  @param {InputHandler} self \<InputHandler> This
+         *  @param {Player} player \<Player> Player UI is drawn for
+         * 
+         *  @author Jakob
+         * 
+         */
 
         this.draw['hotbar'] = function (self) {
 
@@ -322,11 +378,11 @@ class InputHandler {
 
         }
 
-        this.hotbar = {
+        this.hotbar = { // Contains all UI variables
 
-            selected: 1,
-            potionSelected: 0,
-            objects: [
+            selected: 1, // Currently selected hotbar box
+            potionSelected: 0, // Currently selected potion type
+            objects: [ // All different object types
                 'coin',
                 'actuator',
                 'switch',
@@ -335,23 +391,40 @@ class InputHandler {
                 'spikes',
                 'potion'
             ].reverse(),
-            color: ['red', 'blue'],
-            potion: ['tube', 'flask'],
+            color: ['red', 'blue'], // Different actuator colors
+            potion: ['tube', 'flask'], // Different potion sizes
             coin: {
-                animationState: 0,
-                animationRate: 4,
-                update: 0,
-                images: imageHandler.sprites['coin']
+                animationState: 0, // Coin sprite location within array
+                animationRate: 4, // Update rate of coin sprite - REMOVED
+                update: 0, // Time of last update - REMOVED
+                images: imageHandler.sprites['coin'] // Images of coin tile set
             }
 
         }
 
     }
 
+    /** Handle all inputs for the player entity
+     * 
+     *  @param {Map} keys \<Map> Keys currently pressed
+     *  @param {Player} player \<Player> Player being controlled
+     * 
+     *  @author Jakob
+     * 
+     */
+
     handlePlayer (keys, player) {
 
-        player.moving = false;
-        let moved;
+        player.moving = false; // Assume player is not moving
+        let moved; // Player has not moved this frame
+
+        /*  if key is pressed for given direction
+                if player is moving diagonally
+                    move at 0.7 * speed (Pythagoras for a total movement of 1 * speed)
+                else
+                    move at 1 * speed
+                if player moved: moved is true
+        */
 
         if (keys.has(InputHandler.control.moveUp)) {
 
@@ -418,6 +491,16 @@ class InputHandler {
         }
         
     }
+
+    /** Handles mouse inputs
+     * 
+     *  @param {Map} keys \<Map> Keys being pressed
+     *  @param {Surface} surface \<Surface> Surface being effected
+     *  @param {Player} player \<Player> Player being effected
+     * 
+     *  @author Jakob 
+     * 
+     */
 
     handleMouse (keys, surface, player) {
 
@@ -513,8 +596,6 @@ class InputHandler {
         
                     surface.tiles = Surface.populateEdges(surface.tiles);
         
-                    return false;
-        
                 }
         
             }
@@ -522,10 +603,20 @@ class InputHandler {
         }
 
     }
+
+    /** Handles keyboard inputs
+     * 
+     *  @param {Map} keys \<Map> Keys being pressed
+     *  @param {Surface} surface \<Surface> Surface being effected
+     *  @param {Player} player \<Player> Player being effected
+     * 
+     *  @author Jakob 
+     * 
+     */
     
     handleKeyboard (keys, surface, player) {
 
-        if (keys.has(InputHandler.control.getMap)) {
+        if (keys.has(InputHandler.control.getMap)) { // Logs the current level code
 
             console.log(Surface.surfaceToLevel(surface.tiles));
 
@@ -533,7 +624,7 @@ class InputHandler {
 
         }
 
-        if (keys.has(InputHandler.control.mute)) {
+        if (keys.has(InputHandler.control.mute)) { // Toggles mute state of game
 
             audioHandler.toggleMute();
 
@@ -541,13 +632,13 @@ class InputHandler {
 
         }
 
-        for (let x = 1; x <= this.hotbar.objects.length; x ++) {
+        for (let x = 1; x <= this.hotbar.objects.length; x ++) { // Switch to currently selected hotbar slot
 
             if (keys.has(`${x}`)) this.hotbar.selected = x;
 
         }
 
-        if (keys.has('=') || keys.has('+')) {
+        if (keys.has('=') || keys.has('+')) { // DEBUG - Increase attribute
 
             player.score ++;
             keys.delete('=');
@@ -555,7 +646,7 @@ class InputHandler {
 
         }
 
-        if (keys.has('-') || keys.has('_')) {
+        if (keys.has('-') || keys.has('_')) { // DEBUG - Decrease attribute
 
             player.score --;
             keys.delete('-');
@@ -563,7 +654,7 @@ class InputHandler {
 
         }
 
-        if (keys.has('c')) {
+        if (keys.has('c')) { // Place object from hotbar
 
             keys.delete('c');
 
