@@ -310,15 +310,17 @@ class Surface {
             'blue': []
 
         }
-        
+
+        this.pathFinder = new aStar(this.size.x, this.size.y, false, aStar.manhattan);
+
         this.tiles = new Array (this.size.y);
-
+        
         for (let index = 0; index < this.size.y; index ++) {
-
+            
             this.tiles[index] = new Array (this.size.x);
-
+            
         }
-
+    
         levelCode = levelCode.split('/');
 
         for (let indexY = 0; indexY < this.size.y; indexY ++) {
@@ -332,6 +334,12 @@ class Surface {
 
                 if (tileType == '!') {
 
+                    for (let count = 0; count < tileCount; count ++) {
+
+                        this.pathFinder.grid[indexY][totalLength + count].isWall = true;
+
+                    }
+
                     totalLength += tileCount;
                     continue;
 
@@ -340,6 +348,8 @@ class Surface {
                 for (let count = 0; count < tileCount; count ++) {
 
                     this.tiles[indexY][totalLength + count] = new Tile (totalLength + count, indexY, tileType, this);
+
+                    if (tileType.toLowerCase() == 's') this.pathFinder.grid[indexY][totalLength + count].isWall = true;
 
                 }
 
@@ -399,24 +409,103 @@ class Surface {
 
     updateEnemies () {
 
-        // TODO - add a*
-
         for (let enemy of this.enemies) {
+
+            let enemyNode = this.pathFinder.grid[enemy.last.y][enemy.last.x];
+            let playerNode = this.pathFinder.grid[this.player.last.y][this.player.last.x];
+
+            if (enemy.reachedNode) {
+                
+                enemy.path = this.pathFinder.search(enemyNode, playerNode);
+                enemy.reachedNode = false;
+
+            }
+
+            enemy.target = enemy.path[1] || enemy.path[0];
+            
+            this.pathFinder.resetGrid();
+
+            let enemyCentrePosX = enemy.pos.x + enemy.size.x / 2;
+            let enemyCentrePosY = enemy.pos.y + enemy.size.y / 2;
+
+            let targetCentrePosX = enemy.target.index.x * Tile.size + Tile.size / 2;
+            let targetCentrePosY = enemy.target.index.y * Tile.size + Tile.size / 2;
+
+            let deadZone = Tile.size * 0.05;
 
             let update = {
 
                 x: 0,
                 y: 0
 
-            };
+            }
 
-            update.x = Math.sign(this.player.mesh.pos.x + (this.player.mesh.size.x / 2) - (enemy.mesh.pos.x + (enemy.mesh.size.x / 2)));
-            update.y = Math.sign(this.player.mesh.pos.y + (this.player.mesh.size.y / 2) - (enemy.mesh.pos.y + (enemy.mesh.size.y / 2)));
+            let reached = {
 
-            if (update.x && Math.abs(this.player.mesh.pos.x + (this.player.mesh.size.x / 2) - (enemy.mesh.pos.x + (enemy.mesh.size.x / 2))) < Tile.size / 16) update.x = 0;
-            if (update.y && Math.abs(this.player.mesh.pos.y + (this.player.mesh.size.y / 2) - (enemy.mesh.pos.y + (enemy.mesh.size.y / 2))) < Tile.size / 16) update.y = 0;
+                x: false,
+                y: false
 
-            enemy.update(update.x, update.y);
+            }
+
+            if (enemyCentrePosX != targetCentrePosX) {
+
+                if (enemyCentrePosX < targetCentrePosX) {
+
+                    update.x = 1;
+
+                } else {
+
+                    update.x = -1;
+
+                }
+
+            } 
+            
+            if (enemyCentrePosX <= targetCentrePosX + deadZone && enemyCentrePosX >= targetCentrePosX - deadZone) {
+
+                enemy.pos.x = enemy.target.index.x * Tile.size;
+                enemy.mesh.pos.x = enemy.target.index.x * Tile.size;
+
+                enemy.last.x = enemy.target.index.x;
+
+                update.x = 0;
+                reached.x = true;
+
+            }
+
+            if (enemyCentrePosY != targetCentrePosY) {
+
+                if (enemyCentrePosY < targetCentrePosY) {
+
+                    update.y = 1;
+
+                } else {
+
+                    update.y = -1;
+
+                }
+
+            }
+            
+            if (enemyCentrePosY <= targetCentrePosY + deadZone && enemyCentrePosY >= targetCentrePosY - deadZone) {
+
+                enemy.pos.y = enemy.target.index.y * Tile.size;
+                enemy.mesh.pos.y = enemy.target.index.y * Tile.size;
+
+                enemy.last.y = enemy.target.index.y;
+
+                update.y = 0;
+                reached.y = true;
+
+            }
+
+            if (reached.x && reached.y) {
+                
+                enemy.reachedNode = true;
+
+            }
+
+            enemy.update(update.x, update.y)
 
         }
 
