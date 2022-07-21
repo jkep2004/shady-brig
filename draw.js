@@ -72,7 +72,7 @@ function draw () {
 
     pop();
 
-    inputHandler.draw['hotbar'](inputHandler);
+    // inputHandler.draw['hotbar'](inputHandler);
     inputHandler.draw['hearts'](inputHandler, world.player);
     inputHandler.draw['score'](inputHandler, world.player);
 
