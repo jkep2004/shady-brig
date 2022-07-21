@@ -28,7 +28,7 @@ function draw () {
 
     if (updateObjects) CollisionHandler.playerObjectCollisions(world, world.player, world.enemies, world.coins, world.ladders, world.potions);
     
-    background(100); // Make background a light-grey
+    background(BACKGROUND); // Color background
     inputHandler.draw['lowHealth'](inputHandler, world.player);
 
     push(); // Save current translation
@@ -44,15 +44,15 @@ function draw () {
 
     // DEBUG
     
-    if (updateObjects) Mesh.draw(world.player.mesh.pos.x, world.player.mesh.pos.y, world.player.mesh.size.x, world.player.mesh.size.y); // DEBUG - draw player collision
-    if (updateObjects) CollisionHandler.drawArrayMeshBox(world.ladders);
-    if (updateObjects) CollisionHandler.drawArrayMeshBox(world.coins);
-    if (updateObjects) CollisionHandler.drawArrayMeshBox(world.enemies);
-    if (updateObjects) CollisionHandler.drawArrayMeshBox(world.potions);
-    if (updateObjects) CollisionHandler.drawArrayMeshBox(world.switches['red']);
-    if (updateObjects) CollisionHandler.drawArrayMeshBox(world.actuators['red']);
-    if (updateObjects) CollisionHandler.drawArrayMeshBox(world.switches['blue']);
-    if (updateObjects) CollisionHandler.drawArrayMeshBox(world.actuators['blue']);
+    // if (updateObjects) Mesh.draw(world.player.mesh.pos.x, world.player.mesh.pos.y, world.player.mesh.size.x, world.player.mesh.size.y); // DEBUG - draw player collision
+    // if (updateObjects) CollisionHandler.drawArrayMeshBox(world.ladders);
+    // if (updateObjects) CollisionHandler.drawArrayMeshBox(world.coins);
+    // if (updateObjects) CollisionHandler.drawArrayMeshBox(world.enemies);
+    // if (updateObjects) CollisionHandler.drawArrayMeshBox(world.potions);
+    // if (updateObjects) CollisionHandler.drawArrayMeshBox(world.switches['red']);
+    // if (updateObjects) CollisionHandler.drawArrayMeshBox(world.actuators['red']);
+    // if (updateObjects) CollisionHandler.drawArrayMeshBox(world.switches['blue']);
+    // if (updateObjects) CollisionHandler.drawArrayMeshBox(world.actuators['blue']);
 
     if (updateObjects) {
 
@@ -62,7 +62,7 @@ function draw () {
 
                 if (!tile || !tile.mesh) continue;
 
-                CollisionHandler.drawDictCollisionBox(tile.mesh);
+                // CollisionHandler.drawDictCollisionBox(tile.mesh);
 
             }
 
