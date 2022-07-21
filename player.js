@@ -14,7 +14,7 @@ class Player extends Entity {
         this.keys = 0;
 
         this.surface = parentLevel;
-        this.last = {}
+        this.last = {};
 
         this.weapon = new Weapon ();
         this.mesh = new Mesh (this.pos.x, this.pos.y + this.size.y * 0.25, this.size.x, this.size.y * 0.75);
@@ -35,8 +35,8 @@ class Player extends Entity {
 
     draw () {
 
-        let indexY = (Math.floor(this.pos.y / Tile.size) + 1 >= 0 && Math.floor(this.pos.y / Tile.size) + 1 < this.surface.size.y) ? Math.floor(this.pos.y / Tile.size) + 1 : null;
-        let indexX = (Math.floor(this.pos.x / Tile.size) >= 0 && Math.floor(this.pos.x / Tile.size) < this.surface.size.x) ? Math.floor(this.pos.x / Tile.size) : null;
+        let indexY = (Math.round(this.pos.y / Tile.size) >= 0 && Math.round(this.pos.y / Tile.size) < this.surface.size.y) ? Math.round(this.pos.y / Tile.size) : null;
+        let indexX = (Math.round(this.pos.x / Tile.size) >= 0 && Math.round(this.pos.x / Tile.size) < this.surface.size.x) ? Math.round(this.pos.x / Tile.size) : null;
         
         if (indexY && indexX && this.surface.tiles[indexY][indexX] && this.surface.tiles[indexY][indexX].object == null) {
 
