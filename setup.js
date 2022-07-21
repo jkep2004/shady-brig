@@ -75,8 +75,8 @@ function setup () {
 
     Enemy.speed = {
 
-        x: Math.ceil(Player.speed.x / 3),
-        y: Math.ceil(Player.speed.y / 3)
+        x: Math.ceil(Player.speed.x / 2),
+        y: Math.ceil(Player.speed.y / 2)
 
     }
 
