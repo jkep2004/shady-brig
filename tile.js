@@ -253,7 +253,7 @@ class Tile {
     createEnemy () {
         
         this.imageNum = 'e'
-        this.level.enemies.push(new Enemy (this.pos.x, this.pos.y, this.level));
+        this.level.enemies.push(new Enemy (this.pos.x, this.pos.y, this.level.enemies.length, this.level));
 
     }
 
