@@ -2,6 +2,7 @@ var simRate, targetFPS, simSpeed; // Initialise global framerate variables
 var world, player; // Initialise global level variables
 var updateObjects, fadeAlpha; // Initialise room fade variables
 var actuated;
+var BACKGROUND = [100]; // Background color
 
 /** Initialise all variables and create p5.Canvas
  * 
@@ -74,8 +75,8 @@ function setup () {
 
     Enemy.speed = {
 
-        x: Player.speed.x / 2,
-        y: Player.speed.y / 2
+        x: Math.ceil(Player.speed.x / 3),
+        y: Math.ceil(Player.speed.y / 3)
 
     }
 
