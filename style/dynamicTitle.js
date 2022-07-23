@@ -1,7 +1,7 @@
 let files = [
 
-  'audioHandler.js',
-  'imageHandler.js',
+  './audio/audioHandler.js',
+  './image/imageHandler.js',
   'actuator.js',
   'coin.js',
   'collision.js',
