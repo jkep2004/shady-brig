@@ -236,8 +236,11 @@ class aStar {
 
         }
 
-        console.log(`No path between [${startNode.index.x}, ${startNode.index.y}] and [${endNode.index.x}, ${endNode.index.y}]`)
-        return [startNode];
+        this.resetGrid();
+
+        let randomNode = random(aStar.neighbours(this.grid, startNode, this.searchDiagonal));
+
+        return [startNode, randomNode];
 
     }
 

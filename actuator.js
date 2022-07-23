@@ -31,6 +31,15 @@ class Actuator {
 
         }
 
+        this.mesh = {
+
+            'up': new Mesh (this.pos.x, this.pos.y, this.size.x, 1),
+            'down': new Mesh (this.pos.x, this.pos.y + this.size.y, this.size.x, 1),
+            'left': new Mesh (this.pos.x, this.pos.y, 1, this.size.y),
+            'right': new Mesh (this.pos.x + this.size.x, this.pos.y, 1, this.size.y)
+
+        }
+
         this.index = index;
 
         this.parent = parent;
@@ -38,7 +47,7 @@ class Actuator {
 
         this.images = Actuator.images[color];
         this.color = color;
-        this.state = (state) ? 1: 0;
+        this.state = state;
 
         this.show = true;
 
@@ -52,7 +61,7 @@ class Actuator {
 
     draw () {
 
-        if (this.show) image(this.images[this.state], this.pos.x, this.pos.y, this.size.x, this.size.y);
+        if (this.show) image(this.images[(this.state) ? 1 : 0], this.pos.x, this.pos.y, this.size.x, this.size.y);
 
     }
 
@@ -77,7 +86,7 @@ class Switch {
      * 
      */
 
-    constructor (posX, posY, color, state = false, parent, surface) {
+    constructor (posX, posY, color, state = false, index, parent, surface) {
 
         this.pos = {
 
@@ -96,9 +105,13 @@ class Switch {
         this.parent = parent;
         this.surface = surface;
 
+        this.mesh = new Mesh (this.pos.x, this.pos.y, this.size.x, this.size.y);
+
+        this.index = index;
+
         this.images = Switch.images[color];
         this.color = color;
-        this.state = (state) ? 1: 0;
+        this.state = state;
 
         this.last = millis();
 
@@ -114,7 +127,7 @@ class Switch {
 
     draw () {
 
-        if (this.show) image(this.images[this.state], this.pos.x, this.pos.y, this.size.x, this.size.y);
+        if (this.show) image(this.images[(this.color == 'red') ? ((this.state) ? 1 : 0) : ((this.state) ? 0 : 1)], this.pos.x, this.pos.y, this.size.x, this.size.y);
 
     }
 
@@ -126,23 +139,29 @@ class Switch {
 
     flip () {
 
-        if (this.last - millis() > Switch.delay) {
+        if (millis() - this.last > Switch.delay) {
 
-            actuated[this.color] = !actuated[this.color];
+            for (let [color, state] of Object.entries(actuated)) {
+
+                actuated[color] = !actuated[color];
+
+                for (let switchObject of this.surface.switches[color]) {
     
-            for (let actuator of this.surface.switches[this.color]) {
-    
-                actuator.state = !actuator.state;
-    
-            }
-    
-            for (let actuator of this.surface.actuators[this.color]) {
-    
-                actuator.state = !actuator.state;
-    
+                    switchObject.state = !switchObject.state;
+        
+                }
+        
+                for (let actuator of this.surface.actuators[color]) {
+        
+                    actuator.state = !actuator.state;
+        
+                }
+
             }
 
             this.last = millis();
+
+            Surface.updateGrid(this.surface);
     
         }
 
