@@ -68,7 +68,7 @@ class CollisionHandler {
 
 	}
 
-	static playerObjectCollisions = function (surface, player, enemies, coins, ladders, potions) {
+	static playerObjectCollisions = function (surface, player, enemies, coins, ladders, potions, switches, actuators) {
 
 		for (let enemy of enemies) {
 
@@ -116,6 +116,76 @@ class CollisionHandler {
 
 				potion.effect(player);
 				continue;
+
+			}
+
+		}
+
+		for (let [color, switchArray] of Object.entries(switches)) {
+
+			for (let switchObject of switchArray) {
+
+				if (Mesh.colliding(player.mesh, switchObject.mesh) && keys.has(InputHandler.control.interact)) {
+
+					keys.delete(InputHandler.control.interact);
+
+					switchObject.flip();
+
+				} 
+
+			}
+
+		}
+
+	}
+
+	static entityToActuator = function (surface, entity, sideCheck) {
+
+		for (let [color, actuatorArray] of Object.entries(surface.actuators)) {
+
+			for (let actuator of actuatorArray) {
+
+				if (actuator.state == true) {
+
+					for (let [side, mesh] of Object.entries(actuator.mesh)) {
+
+						// Treat collisions opposite to tiles, as entity is inside tile mesh as opposed to being outside of the actuator mesh
+
+						if (side == sideCheck && side == 'down' && keys.has(InputHandler.control.moveUp) && Mesh.colliding(mesh, entity.mesh)) {  // Top
+
+							entity.pos.y = mesh.pos.y + (entity.mesh.size.y - entity.size.y);
+							entity.mesh.pos.y = mesh.pos.y;
+							return true;
+
+						}
+
+						if (side == sideCheck && side == 'up' && keys.has(InputHandler.control.moveDown) && Mesh.colliding(mesh, entity.mesh)) { // Bottom
+
+							entity.pos.y = mesh.pos.y - entity.size.y;
+							entity.mesh.pos.y = mesh.pos.y - entity.mesh.size.y;
+							return true;
+
+						}
+
+						if (side == sideCheck && side == 'right' && keys.has(InputHandler.control.moveLeft) && Mesh.colliding(mesh, entity.mesh)) { // Left
+
+							entity.pos.x = mesh.pos.x;
+							entity.mesh.pos.x = mesh.pos.x;
+							return true;
+
+						}
+
+						if (side == sideCheck && side == 'left' && keys.has(InputHandler.control.moveRight) && Mesh.colliding(mesh, entity.mesh)) { // Right
+
+							entity.pos.x = mesh.pos.x - entity.size.x;
+							entity.mesh.pos.x = mesh.pos.x - entity.mesh.size.x;
+							return true;
+
+						}
+
+					}
+
+				}
 
 			}
 

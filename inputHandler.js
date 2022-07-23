@@ -595,6 +595,7 @@ class InputHandler {
                     if (edited) recentlyChanged.set(`${index.x},${index.y}`, millis());
         
                     surface.tiles = Surface.populateEdges(surface.tiles);
+                    Surface.updateGrid(surface);
         
                 }
         
@@ -677,6 +678,8 @@ class InputHandler {
                 surface.tiles[index.y][index.x].image = imageHandler.sprites['floor'][0];
 
                 surface.tiles[index.y][index.x].object = null;
+
+                let color;
 
                 switch (this.hotbar.objects[this.hotbar.objects.length - this.hotbar.selected]) {
 
@@ -764,9 +767,49 @@ class InputHandler {
 
                         surface.tiles[index.y][index.x].imageNum = (keys.has('shift')) ? potionColor[0].toUpperCase() : potionColor[0].toLowerCase();
 
+                        break;
+
+                    case 'switch':
+
+                        if (keys.has('shift')) {
+
+                            color = 'blue';
+
+                        } else {
+
+                            color = 'red';
+
+                        }
+
+                        surface.tiles[index.y][index.x].object = new Switch (surface.tiles[index.y][index.x].pos.x, surface.tiles[index.y][index.x].pos.y, color, actuated[color], surface.switches[color].length, surface.tiles[index.y][index.x], surface);
+                        surface.switches[color].push(surface.tiles[index.y][index.x].object);
+
+                        surface.tiles[index.y][index.x].imageNum = (color == 'red') ? 'z' : 'Z';
+
+                        break;
+
+                    case 'actuator':
+
+                        if (keys.has('shift')) {
+
+                            color = 'blue';
+
+                        } else {
+
+                            color = 'red';
+
+                        }
+
+                        surface.tiles[index.y][index.x].object = new Actuator (surface.tiles[index.y][index.x].pos.x, surface.tiles[index.y][index.x].pos.y, color, actuated[color], surface.actuators[color].length, surface.tiles[index.y][index.x], surface);
+                        surface.actuators[color].push(surface.tiles[index.y][index.x].object);
+
+                        surface.tiles[index.y][index.x].imageNum = (color == 'red') ? 'a' : 'A';
+
                 }
 
             }
+
+            Surface.updateGrid(surface);
 
         }
 

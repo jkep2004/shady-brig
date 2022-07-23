@@ -26,7 +26,7 @@ function draw () {
 
     if (updateObjects) world.updateEnemies();
 
-    if (updateObjects) CollisionHandler.playerObjectCollisions(world, world.player, world.enemies, world.coins, world.ladders, world.potions);
+    if (updateObjects) CollisionHandler.playerObjectCollisions(world, world.player, world.enemies, world.coins, world.ladders, world.potions, world.switches, world.actuators);
     
     background(BACKGROUND); // Color background
     inputHandler.draw['lowHealth'](inputHandler, world.player);
@@ -50,9 +50,9 @@ function draw () {
     if (updateObjects) CollisionHandler.drawArrayMeshBox(world.enemies);
     if (updateObjects) CollisionHandler.drawArrayMeshBox(world.potions);
     if (updateObjects) CollisionHandler.drawArrayMeshBox(world.switches['red']);
-    if (updateObjects) CollisionHandler.drawArrayMeshBox(world.actuators['red']);
+    if (updateObjects) CollisionHandler.drawDictCollisionBox(world.actuators['red']);
     if (updateObjects) CollisionHandler.drawArrayMeshBox(world.switches['blue']);
-    if (updateObjects) CollisionHandler.drawArrayMeshBox(world.actuators['blue']);
+    if (updateObjects) CollisionHandler.drawDictCollisionBox(world.actuators['blue']);
 
     if (updateObjects) {
 
