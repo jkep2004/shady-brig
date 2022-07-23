@@ -38,7 +38,7 @@ class Player extends Entity {
         let indexY = (Math.round(this.pos.y / Tile.size) >= 0 && Math.round(this.pos.y / Tile.size) < this.surface.size.y) ? Math.round(this.pos.y / Tile.size) : null;
         let indexX = (Math.round(this.pos.x / Tile.size) >= 0 && Math.round(this.pos.x / Tile.size) < this.surface.size.x) ? Math.round(this.pos.x / Tile.size) : null;
         
-        if (indexY && indexX && this.surface.tiles[indexY][indexX] && this.surface.tiles[indexY][indexX].object == null) {
+        if (indexY && indexX && this.surface.tiles[indexY][indexX] && this.surface.tiles[indexY][indexX].imageNum.toString().toLowerCase() != 'l' && this.surface.tiles[indexY][indexX].imageNum.toString().toLowerCase() != 'j') {
 
             this.last = {
 
