@@ -689,6 +689,7 @@ class InputHandler {
                     case 'demon/idle':
 
                         surface.tiles[index.y][index.x].createEnemy();
+                        surface.enemies[surface.enemies.length - 1].last = {x: index.x, y: index.y};
 
                         break;
 
