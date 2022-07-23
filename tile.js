@@ -176,18 +176,18 @@ class Tile {
 
                 break;
 
-            case 's': // Red switch
+            case 'z': // Red switch
 
                 this.image = imageHandler.sprites['floor'][0];
-                this.object = new Switch (this.pos.x, this.pos.y, 'red', actuated.red, this.level.actuators.length, this, this.level)
+                this.object = new Switch (this.pos.x, this.pos.y, 'red', actuated.red, this.level.switches['red'].length, this, this.level)
                 this.level.switches['red'].push(this.object);
 
                 break;
 
-            case 'S': // Blue switch
+            case 'Z': // Blue switch
 
                 this.image = imageHandler.sprites['floor'][0];
-                this.object = new Switch (this.pos.x, this.pos.y, 'blue', actuated.blue, this.level.actuators.length, this, this.level)
+                this.object = new Switch (this.pos.x, this.pos.y, 'blue', actuated.blue, this.level.switches['blue'].length, this, this.level)
                 this.level.switches['blue'].push(this.object);
 
                 break;
@@ -195,7 +195,7 @@ class Tile {
             case 'a': // Red actuator
 
                 this.image = imageHandler.sprites['floor'][0];
-                this.object = new Actuator (this.pos.x, this.pos.y, 'red', actuated.red, this.level.actuators.length, this, this.level);
+                this.object = new Actuator (this.pos.x, this.pos.y, 'red', actuated.red, this.level.actuators['red'].length, this, this.level);
                 this.level.actuators['red'].push(this.object);
 
                 break;
@@ -203,7 +203,7 @@ class Tile {
             case 'A': // Blue actuator
 
                 this.image = imageHandler.sprites['floor'][0];
-                this.object = new Actuator (this.pos.x, this.pos.y, 'blue', actuated.blue, this.level.actuators.length, this, this.level);
+                this.object = new Actuator (this.pos.x, this.pos.y, 'blue', actuated.blue, this.level.actuators['blue'].length, this, this.level);
                 this.level.actuators['blue'].push(this.object);
 
                 break;
@@ -262,8 +262,6 @@ class Tile {
         this.image = imageHandler.sprites['ladder'][0];
         this.object = new Ladder (this.pos.x, this.pos.y, Tile.size, Tile.size, currentSurface, nextLevel);
         this.level.ladders.push(this.object);
-
-        console.log(currentSurface, nextLevel)
 
         if (currentSurface.index.y != nextLevel.index.y) this.imageNum = (currentSurface.index.y > nextLevel.index.y) ? 'L': 'l';
         if (currentSurface.index.x != nextLevel.index.x) this.imageNum = (currentSurface.index.x < nextLevel.index.x) ? 'J': 'j';
