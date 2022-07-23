@@ -226,6 +226,51 @@ class Surface {
 
     }
 
+    static updateGrid = function (surface) {
+
+        for (let row of surface.pathFinder.grid) {
+
+            for (let node of row) {
+
+                node.isWall = false;
+
+            }
+
+        }
+
+        for (let indexY = 0; indexY < surface.tiles.length; indexY ++) {
+
+            for (let indexX = 0; indexX < surface.tiles[indexY].length; indexX ++) {
+
+                let tile = surface.tiles[indexY][indexX];
+
+                if (!tile) {
+
+                    surface.pathFinder.grid[indexY][indexX].isWall = true;
+                    continue;
+
+                }
+
+                if (tile.imageNum.toString().toLowerCase() == 'a' && tile.object.state) {
+
+                    surface.pathFinder.grid[indexY][indexX].isWall = true;
+                    continue;
+
+                }
+
+                if (tile.imageNum.toString().toLowerCase() == 's') {
+
+                    surface.pathFinder.grid[indexY][indexX].isWall = true;
+                    continue;
+
+                }
+
+            }
+
+        }
+
+    }
+
     static saveLevel = function (surface) {
 
         for (let row of surface.tiles) {
@@ -255,7 +300,7 @@ class Surface {
         surface.tiles[surface.player.last.y][surface.player.last.x].imageNum = 'P';
 
         let code = '';
-
+        
         code = Surface.surfaceToLevel(surface.tiles);
 
         return new Level (surface.index.x, surface.index.y, surface.size.x, surface.size.y, code);
@@ -334,12 +379,6 @@ class Surface {
 
                 if (tileType == '!') {
 
-                    for (let count = 0; count < tileCount; count ++) {
-
-                        this.pathFinder.grid[indexY][totalLength + count].isWall = true;
-
-                    }
-
                     totalLength += tileCount;
                     continue;
 
@@ -348,8 +387,6 @@ class Surface {
                 for (let count = 0; count < tileCount; count ++) {
 
                     this.tiles[indexY][totalLength + count] = new Tile (totalLength + count, indexY, tileType, this);
-
-                    if (tileType.toLowerCase() == 's') this.pathFinder.grid[indexY][totalLength + count].isWall = true;
 
                 }
 
@@ -360,6 +397,7 @@ class Surface {
         }
 
         this.tiles = Surface.populateEdges(this.tiles);
+        Surface.updateGrid(this);
 
     }
 
