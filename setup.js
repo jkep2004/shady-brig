@@ -31,8 +31,8 @@ function setup () {
 
     actuated = {
 
-        red: false,
-        blue: true
+        red: true,
+        blue: false
 
     }
 
