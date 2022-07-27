@@ -1,5 +1,4 @@
-let files = [
-
+const files = [
   './audio/audioHandler.js',
   './image/imageHandler.js',
   'actuator.js',
@@ -20,29 +19,39 @@ let files = [
   'surface.js',
   'tile.js',
   'weapon.js'
+];
 
-]
- 
-let lines = 0;
-let read = 0;
+async function countLines(files) {
+  let actualLines = 0;
 
-function addLines (n) {
+  for (let file of files) {
+    let lines = await fetch(file)
+      .then(response => response.text())
+      .then(text => text.split("\n"));
 
-  lines += n;
-  read++;
+    let multiline = false;
 
-  if (read === files.length) {
+    for (let line of lines) {
+      const trimmed = line.trim();
 
-    document.title = `Shady Brig - ${lines}`;
+      if (trimmed.includes("/*")) multiline = true;
+      if (trimmed.includes("*/")) multiline = false;
 
+      if (multiline) continue;
+
+      if (trimmed.slice(0, 2) == "//") continue;
+      if (trimmed.length === 0) continue;
+
+      const alphanumeric = trimmed.match(/[a-zA-Z0-9]/gi);
+      if (!alphanumeric) continue;
+
+      actualLines++;
+    }
   }
 
+  document.title = `Shady Brig - ${actualLines}`;
 }
 
-for (let file of files) {
-
-  fetch(file).then(text => text.text()).then(e => addLines(e.split("\n").filter(x => x.trim().slice(0, 2) !== "//" && x.trim().length > 0 && x.match(/[a-zA-Z0-9]/gi)).length));
-
-}
+countLines(files);
  
  
